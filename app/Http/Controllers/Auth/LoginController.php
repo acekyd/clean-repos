@@ -47,7 +47,7 @@ class LoginController extends Controller
     public function redirectToProvider()
     {
         return Socialite::driver('github')
-                        ->scopes(['repo', 'public_repo', 'delete_repo'])
+                        ->scopes(['public_repo', 'delete_repo'])
                         ->redirect();
     }
 
@@ -60,6 +60,7 @@ class LoginController extends Controller
     {
         $user = Socialite::driver('github')->user();
 
+        dump($user);
         // $user->token;
     }
 }
