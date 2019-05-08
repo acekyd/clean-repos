@@ -10664,10 +10664,20 @@ a.text-dark:focus {
 
 body {
   background-color: #12143c;
+  color: #dddddd;
+  font-family: "Nunito", sans-serif;
+  font-weight: 200;
+  height: 100vh;
+  margin: 0;
+  padding: 5em;
+  font-size: 22px;
 }
 
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+header .title {
+  width: 148px;
+  height: 37px;
+  font-size: 27px;
+  letter-spacing: 0.3px;
+  color: #09be67;
 }
 
