@@ -26,7 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/app';
 
     /**
      * Create a new controller instance.
@@ -60,7 +60,16 @@ class LoginController extends Controller
     {
         $user = Socialite::driver('github')->user();
 
-        dump($user);
+        //create user session
+        session([
+            'user' => $user
+        ]);
+
+        //redirect page to app page.
+        return redirect()->route('app');
+
+
+        //dump($user);
         // $user->token;
     }
 }

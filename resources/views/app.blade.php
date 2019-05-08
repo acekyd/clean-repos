@@ -63,22 +63,10 @@
 
 <body>
     {{ var_dump(session()->all()) }}
-    <header>
-        <!-- Icon goes here -->
-        <span class="title">CleanRepos</span>
-    </header>
-    <section id="content">
-        <h2>Clean Repositories <span class="lighter">Fast and easy</span></h2>
-        <p>
-            CleanRepos is a simple web application that helps you clean up your GitHub repos. You have unused forks, abandoned and empty projects etc that may serve as a distraction if someone is trying to view your profile or see projects you work on.
-        </p>
+    <div id="app">
 
-        <div>
-            <a href="/login">
-                <button class="authenticate">Get Started</button>
-            </a>
-        </div>
-    </section>
+    </div>
+
 </body>
 
 </html>
