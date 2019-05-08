@@ -37171,7 +37171,7 @@ var render = function() {
   return _c("div", { staticClass: "content" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-md-8" }, [
-        _c("div", { staticClass: "col-md-8 text-center" }, [
+        _c("div", { staticClass: "col-md text-center" }, [
           _c("h2", [
             _vm._v(
               "You have " +
