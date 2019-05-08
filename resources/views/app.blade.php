@@ -64,9 +64,11 @@
 <body>
     {{ var_dump(session()->all()) }}
     <div id="app">
-
+        <welcome-component></welcome-component>
     </div>
 
+    <!-- Include vuejs output script. -->
+    <script type="text/javascript" src="js/app.js"></script>
 </body>
 
 </html>
