@@ -9,7 +9,20 @@
 
                 <div class="repos">
                     <vue-custom-scrollbar class="scroll-area" :settings="settings">
-                        <img src="http://utatti.github.io/perfect-scrollbar/azusa.jpg" height="720" width="1280" alt="">
+                        <label v-for="repo in repos" :key="repo.id" class="repo-item row">
+                            <div class="col-md-1">
+                                <input type="checkbox">
+                                <span class="checkmark"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <h4>Vuegram</h4>
+                                <span>An instagram clone with VueJs</span>
+                            </div>
+                            <div class="col-md-5 additional-details">
+                                <a href="https://github.com/acekyd/737" class="">https://github.com/acekyd/737</a>
+                                <span>Last updated: 3 years ago</span>
+                            </div>
+                        </label>
                     </vue-custom-scrollbar>
                 </div>
             </div>
@@ -36,7 +49,8 @@
                 settings: {
                     maxScrollbarLength: 60,
                     suppressScrollX: true
-                }
+                },
+                repos: {}
             }
         },
         methods: {
@@ -44,6 +58,27 @@
         mounted() {
             console.log('Component mounted.')
             console.log(this.user);
+            var self = this;
+            axios({
+                method: 'get',
+                url: 'https://api.github.com/user/repos?sort=pushed&direction=asc',
+                data: {},
+                headers: {
+                    Authorization: 'token ' + this.user.token
+                }
+            }).then(function (response) {
+                    // handle success
+                    console.log(response.data);
+                    self.repos = response.data;
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                })
+                .finally(function () {
+                    // always executed
+                    //turn off loader here and display error or repos.
+                });
         }
     }
 </script>
@@ -51,12 +86,17 @@
 .scroll-area {
   position: relative;
   margin: auto;
-  height: 500px;
+  height: 600px;
+  border-radius: 9px;
+  border: solid 1px #ffffff;
 }
 .ps__thumb-y, .ps__rail-y:hover>.ps__thumb-y {
     background-color: #09be67;
 }
 .ps__rail-y, .ps__rail-y:hover, .ps__rail-y.ps--clicking .ps__thumb-y, .ps .ps__rail-y:hover {
     background-color: rgba(255, 255, 255, 0.11);
+}
+.ps__rail-y {
+    margin: 10px 0;
 }
 </style>

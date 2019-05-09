@@ -21,7 +21,7 @@
     </header>
     <?php
     if (!session()->get('user')) {
-        redirect()->route('/');
+        redirect('/');
     }
     ?>
     <div id="app">

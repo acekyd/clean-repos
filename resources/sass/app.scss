@@ -31,3 +31,60 @@ header .title {
     letter-spacing: 0.3px;
     color: #09be67;
 }
+
+.repo-item {
+    margin: 1em;
+    padding: 1em;
+    background-color: rgba(255,255,255, 0.05);
+}
+
+.repo-item .additional-details {
+    text-align: right;
+}
+
+/* Hide the browser's default checkbox */
+.repo-item input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.repo-item .checkmark {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 35px;
+  width: 35px;
+  background-color: #12143c;
+  border-radius: 50%;
+  border: 1px solid #fff;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.repo-item input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.repo-item .checkmark:after {
+  left: 11px;
+  top: 5px;
+  width: 10px;
+  height: 17px;
+  border: solid #09be67;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}

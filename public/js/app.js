@@ -1817,6 +1817,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 // import installed component for scrollbar
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1834,13 +1847,32 @@ __webpack_require__.r(__webpack_exports__);
       settings: {
         maxScrollbarLength: 60,
         suppressScrollX: true
-      }
+      },
+      repos: {}
     };
   },
   methods: {},
   mounted: function mounted() {
     console.log('Component mounted.');
     console.log(this.user);
+    var self = this;
+    axios({
+      method: 'get',
+      url: 'https://api.github.com/user/repos?sort=pushed&direction=asc',
+      data: {},
+      headers: {
+        Authorization: 'token ' + this.user.token
+      }
+    }).then(function (response) {
+      // handle success
+      console.log(response.data);
+      self.repos = response.data;
+    })["catch"](function (error) {
+      // handle error
+      console.log(error);
+    })["finally"](function () {// always executed
+      //turn off loader here and display error or repos.
+    });
   }
 });
 
@@ -6303,7 +6335,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.scroll-area {\n  position: relative;\n  margin: auto;\n  height: 500px;\n}\n.ps__thumb-y, .ps__rail-y:hover>.ps__thumb-y {\n    background-color: #09be67;\n}\n.ps__rail-y, .ps__rail-y:hover, .ps__rail-y.ps--clicking .ps__thumb-y, .ps .ps__rail-y:hover {\n    background-color: rgba(255, 255, 255, 0.11);\n}\n", ""]);
+exports.push([module.i, "\n.scroll-area {\n  position: relative;\n  margin: auto;\n  height: 600px;\n  border-radius: 9px;\n  border: solid 1px #ffffff;\n}\n.ps__thumb-y, .ps__rail-y:hover>.ps__thumb-y {\n    background-color: #09be67;\n}\n.ps__rail-y, .ps__rail-y:hover, .ps__rail-y.ps--clicking .ps__thumb-y, .ps .ps__rail-y:hover {\n    background-color: rgba(255, 255, 255, 0.11);\n}\n.ps__rail-y {\n    margin: 10px 0;\n}\n", ""]);
 
 // exports
 
@@ -37871,16 +37903,36 @@ var render = function() {
             _c(
               "vue-custom-scrollbar",
               { staticClass: "scroll-area", attrs: { settings: _vm.settings } },
-              [
-                _c("img", {
-                  attrs: {
-                    src: "http://utatti.github.io/perfect-scrollbar/azusa.jpg",
-                    height: "720",
-                    width: "1280",
-                    alt: ""
-                  }
-                })
-              ]
+              _vm._l(_vm.repos, function(repo) {
+                return _c(
+                  "label",
+                  { key: repo.id, staticClass: "repo-item row" },
+                  [
+                    _c("div", { staticClass: "col-md-1" }, [
+                      _c("input", { attrs: { type: "checkbox" } }),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "checkmark" })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c("h4", [_vm._v("Vuegram")]),
+                      _vm._v(" "),
+                      _c("span", [_vm._v("An instagram clone with VueJs")])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-5 additional-details" }, [
+                      _c(
+                        "a",
+                        { attrs: { href: "https://github.com/acekyd/737" } },
+                        [_vm._v("https://github.com/acekyd/737")]
+                      ),
+                      _vm._v(" "),
+                      _c("span", [_vm._v("Last updated: 3 years ago")])
+                    ])
+                  ]
+                )
+              }),
+              0
             )
           ],
           1
