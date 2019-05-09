@@ -8,6 +8,9 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+import lineClamp from 'vue-line-clamp'
+
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -27,6 +30,10 @@ Vue.component('repos-component', require('./components/ReposComponent.vue').defa
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+
+Vue.use(lineClamp, {})
+
+Vue.use(require('vue-moment'));
 
 const app = new Vue({
     el: '#app',

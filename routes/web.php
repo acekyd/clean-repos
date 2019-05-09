@@ -16,6 +16,9 @@ Route::get('/', function () {
 });
 
 Route::get('/app', function () {
+    if (!session()->get('user')) {
+        return redirect('/');
+    }
     return view('app');
 })->name('app');
 

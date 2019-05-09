@@ -19,11 +19,7 @@
         <!-- Icon goes here -->
         <span class="title">CleanRepos</span>
     </header>
-    <?php
-    if (!session()->get('user')) {
-        redirect('/');
-    }
-    ?>
+
     <div id="app">
         <repos-component :user="{{ collect(session()->get('user')) }}"></repos-component>
     </div>

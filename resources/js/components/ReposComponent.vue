@@ -15,12 +15,12 @@
                                 <span class="checkmark"></span>
                             </div>
                             <div class="col-md-6">
-                                <h4>Vuegram</h4>
-                                <span>An instagram clone with VueJs</span>
+                                <h4>{{ repo.full_name }}</h4>
+                                <p v-line-clamp:20="2">{{ repo.description }}</p>
                             </div>
                             <div class="col-md-5 additional-details">
-                                <a href="https://github.com/acekyd/737" class="">https://github.com/acekyd/737</a>
-                                <span>Last updated: 3 years ago</span>
+                                <a :href="repo.html_url" target="_blank">{{ repo.html_url }}</a>
+                                <p>Last updated: {{repo.pushed_at | moment("from") }}</p>
                             </div>
                         </label>
                     </vue-custom-scrollbar>
@@ -50,7 +50,9 @@
                     maxScrollbarLength: 60,
                     suppressScrollX: true
                 },
-                repos: {}
+                repos: {},
+                loading: true,
+                errored: false
             }
         },
         methods: {
@@ -61,7 +63,7 @@
             var self = this;
             axios({
                 method: 'get',
-                url: 'https://api.github.com/user/repos?sort=pushed&direction=asc',
+                url: 'https://api.github.com/user/repos?sort=pushed&direction=asc&per_page=100',
                 data: {},
                 headers: {
                     Authorization: 'token ' + this.user.token
@@ -73,11 +75,13 @@
                 })
                 .catch(function (error) {
                     // handle error
-                    console.log(error);
+                    console.log(error)
+                    self.errored = true
                 })
                 .finally(function () {
                     // always executed
                     //turn off loader here and display error or repos.
+                    self.loading = false
                 });
         }
     }
