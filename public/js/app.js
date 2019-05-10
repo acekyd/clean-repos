@@ -1830,6 +1830,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 // import installed component for scrollbar
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1850,7 +1861,8 @@ __webpack_require__.r(__webpack_exports__);
       },
       repos: {},
       loading: true,
-      errored: false
+      errored: false,
+      selectedRepos: []
     };
   },
   methods: {},
@@ -6340,7 +6352,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.scroll-area {\n  position: relative;\n  margin: auto;\n  height: 600px;\n  border-radius: 9px;\n  border: solid 1px #ffffff;\n}\n.ps__thumb-y, .ps__rail-y:hover>.ps__thumb-y {\n    background-color: #09be67;\n}\n.ps__rail-y, .ps__rail-y:hover, .ps__rail-y.ps--clicking .ps__thumb-y, .ps .ps__rail-y:hover {\n    background-color: rgba(255, 255, 255, 0.11);\n}\n.ps__rail-y {\n    margin: 10px 0;\n}\n", ""]);
+exports.push([module.i, "\n.scroll-area {\n  position: relative;\n  margin: 1em auto;\n  height: 600px;\n  border-radius: 9px;\n  border: solid 1px #ffffff;\n}\n.ps__thumb-y, .ps__rail-y:hover>.ps__thumb-y {\n    background-color: #09be67;\n}\n.ps__rail-y, .ps__rail-y:hover, .ps__rail-y.ps--clicking .ps__thumb-y, .ps .ps__rail-y:hover {\n    background-color: rgba(255, 255, 255, 0.11);\n}\n.ps__rail-y {\n    margin: 10px 0;\n}\n", ""]);
 
 // exports
 
@@ -37923,10 +37935,48 @@ var render = function() {
               _vm._l(_vm.repos, function(repo) {
                 return _c(
                   "label",
-                  { key: repo.id, staticClass: "repo-item row" },
+                  { key: repo.full_name, staticClass: "repo-item row" },
                   [
                     _c("div", { staticClass: "col-md-1" }, [
-                      _c("input", { attrs: { type: "checkbox" } }),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.selectedRepos,
+                            expression: "selectedRepos"
+                          }
+                        ],
+                        attrs: { type: "checkbox", id: repo.id },
+                        domProps: {
+                          value: repo.full_name,
+                          checked: Array.isArray(_vm.selectedRepos)
+                            ? _vm._i(_vm.selectedRepos, repo.full_name) > -1
+                            : _vm.selectedRepos
+                        },
+                        on: {
+                          change: function($event) {
+                            var $$a = _vm.selectedRepos,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = repo.full_name,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 &&
+                                  (_vm.selectedRepos = $$a.concat([$$v]))
+                              } else {
+                                $$i > -1 &&
+                                  (_vm.selectedRepos = $$a
+                                    .slice(0, $$i)
+                                    .concat($$a.slice($$i + 1)))
+                              }
+                            } else {
+                              _vm.selectedRepos = $$c
+                            }
+                          }
+                        }
+                      }),
                       _vm._v(" "),
                       _c("span", { staticClass: "checkmark" })
                     ]),
@@ -37969,10 +38019,42 @@ var render = function() {
                 )
               }),
               0
-            )
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md text-center" }, [
+              _c("p", [
+                _c("span", { staticClass: "selectedLabel" }, [
+                  _vm._v(_vm._s(_vm.selectedRepos.length))
+                ]),
+                _vm._v(" repo(s) selected for cleaning.\n                    ")
+              ]),
+              _vm._v(" "),
+              _c(
+                "p",
+                _vm._l(_vm.selectedRepos, function(selected) {
+                  return _c(
+                    "span",
+                    { key: selected.id, staticClass: "selectedRepos" },
+                    [_vm._v(_vm._s(selected))]
+                  )
+                }),
+                0
+              )
+            ])
           ],
           1
-        )
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "text-center" }, [
+          _c(
+            "button",
+            {
+              staticClass: "deleteRepos",
+              attrs: { disabled: !_vm.selectedRepos.length }
+            },
+            [_vm._v("Delete Repos")]
+          )
+        ])
       ])
     ])
   ])

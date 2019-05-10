@@ -9,9 +9,9 @@
 
                 <div class="repos">
                     <vue-custom-scrollbar class="scroll-area" :settings="settings">
-                        <label v-for="repo in repos" :key="repo.id" class="repo-item row">
+                        <label v-for="repo in repos" :key="repo.full_name" class="repo-item row">
                             <div class="col-md-1">
-                                <input type="checkbox">
+                                <input type="checkbox" v-model="selectedRepos" :id="repo.id" :value="repo.full_name">
                                 <span class="checkmark"></span>
                             </div>
                             <div class="col-md-6">
@@ -24,6 +24,17 @@
                             </div>
                         </label>
                     </vue-custom-scrollbar>
+                    <div class="col-md text-center">
+                        <p>
+                            <span class="selectedLabel">{{ selectedRepos.length }}</span> repo(s) selected for cleaning.
+                        </p>
+                        <p>
+                            <span class="selectedRepos" v-for="selected in selectedRepos" :key="selected.id">{{ selected }}</span>
+                        </p>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button class="deleteRepos" :disabled="!selectedRepos.length">Delete Repos</button>
                 </div>
             </div>
         </div>
@@ -52,7 +63,8 @@
                 },
                 repos: {},
                 loading: true,
-                errored: false
+                errored: false,
+                selectedRepos: []
             }
         },
         methods: {
@@ -89,7 +101,7 @@
 <style >
 .scroll-area {
   position: relative;
-  margin: auto;
+  margin: 1em auto;
   height: 600px;
   border-radius: 9px;
   border: solid 1px #ffffff;

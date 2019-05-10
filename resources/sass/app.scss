@@ -95,6 +95,10 @@ header .title {
   display: block;
 }
 
+.repo-item > input:checked {
+    background-color: rgba(255,190,103, 0.2);
+}
+
 /* Style the checkmark/indicator */
 .repo-item .checkmark:after {
   left: 11px;
@@ -106,4 +110,37 @@ header .title {
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
+}
+
+.selectedLabel {
+    background-color: #b04040;
+    padding: 0rem 0.5rem;
+    border-radius: 40%;
+    color: #fff;
+    font-weight: bold;
+}
+
+.selectedRepos {
+    padding: 0rem 0.5rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    margin: 0 0.3em;
+    background: #b04040;
+}
+
+.deleteRepos {
+    width: 335px;
+    height: 73px;
+    border-radius: 10px;
+    background-color: #b04040;
+    font-size: 27px;
+    font-weight: bold;
+    letter-spacing: 0.3px;
+    color: #fff;
+    margin: 1em 0;
+    border-style: none;
+}
+
+.deleteRepos:disabled {
+    background-color: #ccc;
 }

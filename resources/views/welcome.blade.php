@@ -48,7 +48,7 @@
         .authenticate {
             width: 335px;
             height: 73px;
-            border-radius: 44.5px;
+            border-radius: 10px;
             box-shadow: 0 0 37px 5px rgba(9, 190, 103, 0.64);
             background-color: #09be67;
             font-size: 27px;
