@@ -62,7 +62,6 @@
 </head>
 
 <body>
-    {{ var_dump(session()->all()) }}
     <header>
         <!-- Icon goes here -->
         <span class="title">CleanRepos</span>
