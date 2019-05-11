@@ -1852,6 +1852,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 // import installed component for scrollbar
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1873,6 +1877,7 @@ __webpack_require__.r(__webpack_exports__);
       repos: {},
       loading: true,
       loadError: false,
+      starCleanRepo: true,
       selectedRepos: [],
       message: {
         title: 'Delete repositories?',
@@ -1906,7 +1911,18 @@ __webpack_require__.r(__webpack_exports__);
         self.loading = false;
       });
     },
-    starRepo: function starRepo() {},
+    starRepo: function starRepo() {
+      if (this.starCleanRepo) {
+        axios({
+          method: 'put',
+          url: 'https://api.github.com/user/starred/acekyd/clean-repos',
+          data: {},
+          headers: {
+            Authorization: 'token ' + this.user.token
+          }
+        });
+      }
+    },
     deleteRepos: function deleteRepos() {
       var promises = [];
       var self = this;
@@ -1928,7 +1944,8 @@ __webpack_require__.r(__webpack_exports__);
         self.deleteError = true;
         console.log(error.message);
       });
-      this.completed = true; //enable flag to show success page
+      this.completed = true;
+      this.starRepo(); //enable flag to show success page
 
       console.log('Delete action completed ');
     },
@@ -38164,7 +38181,52 @@ var render = function() {
                     "\n                        Delete Repos\n                "
                   )
                 ]
-              )
+              ),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "starCleanRepo" } }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.starCleanRepo,
+                      expression: "starCleanRepo"
+                    }
+                  ],
+                  attrs: { type: "checkbox" },
+                  domProps: {
+                    checked: Array.isArray(_vm.starCleanRepo)
+                      ? _vm._i(_vm.starCleanRepo, null) > -1
+                      : _vm.starCleanRepo
+                  },
+                  on: {
+                    change: function($event) {
+                      var $$a = _vm.starCleanRepo,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = null,
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 && (_vm.starCleanRepo = $$a.concat([$$v]))
+                        } else {
+                          $$i > -1 &&
+                            (_vm.starCleanRepo = $$a
+                              .slice(0, $$i)
+                              .concat($$a.slice($$i + 1)))
+                        }
+                      } else {
+                        _vm.starCleanRepo = $$c
+                      }
+                    }
+                  }
+                }),
+                _vm._v(
+                  "\n                    Star the CleanRepo repository on GitHub\n                "
+                )
+              ])
             ])
           ])
         : _c("div", { staticClass: "col-md-8" }, [

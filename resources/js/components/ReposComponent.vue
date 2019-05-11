@@ -41,7 +41,11 @@
                                         message: message}"
                             :disabled="!selectedRepos.length">
                             Delete Repos
-                    </button>
+                    </button> <br />
+                    <label for="starCleanRepo">
+                        <input type="checkbox" v-model="starCleanRepo" />
+                        Star the CleanRepo repository on GitHub
+                    </label>
                 </div>
             </div>
             <div class="col-md-8" v-else>
@@ -75,6 +79,7 @@
                 repos: {},
                 loading: true,
                 loadError: false,
+                starCleanRepo: true,
                 selectedRepos: [],
                 message: {
                     title: 'Delete repositories?',
@@ -112,7 +117,16 @@
                     });
             },
             starRepo() {
-
+                if(this.starCleanRepo) {
+                    axios({
+                        method: 'put',
+                        url: 'https://api.github.com/user/starred/acekyd/clean-repos',
+                        data: {},
+                        headers: {
+                            Authorization: 'token ' + this.user.token
+                        }
+                    })
+                }
             },
             deleteRepos(){
                 var promises = [];
@@ -135,6 +149,7 @@
                 })
 
                 this.completed = true;
+                this.starRepo();
                 //enable flag to show success page
                 console.log('Delete action completed ');
             },
