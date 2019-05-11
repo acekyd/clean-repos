@@ -1,7 +1,7 @@
 <template>
     <div class="content">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-8" v-if="!completed">
                 <div class="col-md text-center">
                     <h2>You have {{ user.user.public_repos }} public repositories.</h2>
                     <p>Repos have been sorted for those likely to want to be deleted.</p>
@@ -34,9 +34,20 @@
                     </div>
                 </div>
                 <div class="text-center">
-                    <button class="deleteRepos" :disabled="!selectedRepos.length">Delete Repos</button>
+                    <button class="deleteRepos"
+                            v-confirm="{loader: true,
+                                        ok: okCallback,
+                                        cancel: cancelCallback,
+                                        message: message}"
+                            :disabled="!selectedRepos.length">
+                            Delete Repos
+                    </button>
                 </div>
             </div>
+            <div class="col-md-8" v-else>
+                Operation completed.
+            </div>
+
         </div>
     </div>
 </template>
@@ -63,38 +74,86 @@
                 },
                 repos: {},
                 loading: true,
-                errored: false,
-                selectedRepos: []
+                loadError: false,
+                selectedRepos: [],
+                message: {
+                    title: 'Delete repositories?',
+                    body: 'Deleting a repository will permanently remove it from your profile.'
+                },
+                completed: false,
+                deleteError: false
+
             }
         },
         methods: {
+            fetchRepos() {
+                var self = this;
+                axios({
+                    method: 'get',
+                    url: 'https://api.github.com/user/repos?sort=pushed&direction=asc&per_page=100',
+                    data: {},
+                    headers: {
+                        Authorization: 'token ' + this.user.token
+                    }
+                }).then(function (response) {
+                        // handle success
+                        console.log(response.data);
+                        self.repos = response.data;
+                    })
+                    .catch(function (error) {
+                        // handle error
+                        console.log(error)
+                        self.loadError = true
+                    })
+                    .finally(function () {
+                        // always executed
+                        //turn off loader here and display error or repos.
+                        self.loading = false
+                    });
+            },
+            starRepo() {
+
+            },
+            deleteRepos(){
+                var promises = [];
+                var self = this;
+                var test = ['acekyd/test-nope', 'acekyd/test-mad', 'acekyd/tested-error'];
+                const axiosInstance = axios.create({
+                    baseURL: 'https://api.github.com/',
+                    headers: { 'Authorization': 'token ' + this.user.token}
+                });
+                for(let i=0; i < test.length; i++)
+                {
+                    promises.push(axiosInstance.delete('/repos/'+test[i]));
+                }
+                Promise.all(promises).then(function(results) {
+                    console.log("Results", results);
+                })
+                .catch(function (error){
+                    self.deleteError = true;
+                    console.log(error.message)
+                })
+
+                this.completed = true;
+                //enable flag to show success page
+                console.log('Delete action completed ');
+            },
+            okCallback(dialog) {
+
+                setTimeout(() => {
+                //send delete api requests
+                this.deleteRepos();
+                dialog.close();
+                }, 2500);
+            },
+            cancelCallback() {
+                console.log("cancel clicked");
+            }
         },
         mounted() {
             console.log('Component mounted.')
             console.log(this.user);
-            var self = this;
-            axios({
-                method: 'get',
-                url: 'https://api.github.com/user/repos?sort=pushed&direction=asc&per_page=100',
-                data: {},
-                headers: {
-                    Authorization: 'token ' + this.user.token
-                }
-            }).then(function (response) {
-                    // handle success
-                    console.log(response.data);
-                    self.repos = response.data;
-                })
-                .catch(function (error) {
-                    // handle error
-                    console.log(error)
-                    self.errored = true
-                })
-                .finally(function () {
-                    // always executed
-                    //turn off loader here and display error or repos.
-                    self.loading = false
-                });
+            this.fetchRepos();
         }
     }
 </script>

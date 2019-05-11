@@ -8,7 +8,12 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
-import lineClamp from 'vue-line-clamp'
+import lineClamp from 'vue-line-clamp';
+import VuejsDialog from 'vuejs-dialog';
+import VuejsDialogMixin from 'vuejs-dialog/dist/vuejs-dialog-mixin.min.js'; // only needed in custom components
+
+// include the default style
+import 'vuejs-dialog/dist/vuejs-dialog.min.css';
 
 
 /**
@@ -34,6 +39,17 @@ Vue.component('repos-component', require('./components/ReposComponent.vue').defa
 Vue.use(lineClamp, {})
 
 Vue.use(require('vue-moment'));
+
+Vue.use(VuejsDialog, {
+  html: true,
+  loader: true,
+  okText: 'Yes, delete repositories',
+  cancelText: 'No, keep repositories',
+  animation: 'bounce',
+  type:'soft',
+  clicksCount: 3, // for soft confirm, user will be asked to click on "proceed" btn 3 times before actually proceeding
+  customClass: 'deleteConfirm'
+});
 
 const app = new Vue({
     el: '#app',

@@ -1841,6 +1841,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 // import installed component for scrollbar
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1861,35 +1872,84 @@ __webpack_require__.r(__webpack_exports__);
       },
       repos: {},
       loading: true,
-      errored: false,
-      selectedRepos: []
+      loadError: false,
+      selectedRepos: [],
+      message: {
+        title: 'Delete repositories?',
+        body: 'Deleting a repository will permanently remove it from your profile.'
+      },
+      completed: false,
+      deleteError: false
     };
   },
-  methods: {},
+  methods: {
+    fetchRepos: function fetchRepos() {
+      var self = this;
+      axios({
+        method: 'get',
+        url: 'https://api.github.com/user/repos?sort=pushed&direction=asc&per_page=100',
+        data: {},
+        headers: {
+          Authorization: 'token ' + this.user.token
+        }
+      }).then(function (response) {
+        // handle success
+        console.log(response.data);
+        self.repos = response.data;
+      })["catch"](function (error) {
+        // handle error
+        console.log(error);
+        self.loadError = true;
+      })["finally"](function () {
+        // always executed
+        //turn off loader here and display error or repos.
+        self.loading = false;
+      });
+    },
+    starRepo: function starRepo() {},
+    deleteRepos: function deleteRepos() {
+      var promises = [];
+      var self = this;
+      var test = ['acekyd/test-nope', 'acekyd/test-mad', 'acekyd/tested-error'];
+      var axiosInstance = axios.create({
+        baseURL: 'https://api.github.com/',
+        headers: {
+          'Authorization': 'token ' + this.user.token
+        }
+      });
+
+      for (var i = 0; i < test.length; i++) {
+        promises.push(axiosInstance["delete"]('/repos/' + test[i]));
+      }
+
+      Promise.all(promises).then(function (results) {
+        console.log("Results", results);
+      })["catch"](function (error) {
+        self.deleteError = true;
+        console.log(error.message);
+      });
+      this.completed = true; //enable flag to show success page
+
+      console.log('Delete action completed ');
+    },
+    okCallback: function okCallback(dialog) {
+      var _this = this;
+
+      setTimeout(function () {
+        //send delete api requests
+        _this.deleteRepos();
+
+        dialog.close();
+      }, 2500);
+    },
+    cancelCallback: function cancelCallback() {
+      console.log("cancel clicked");
+    }
+  },
   mounted: function mounted() {
     console.log('Component mounted.');
     console.log(this.user);
-    var self = this;
-    axios({
-      method: 'get',
-      url: 'https://api.github.com/user/repos?sort=pushed&direction=asc&per_page=100',
-      data: {},
-      headers: {
-        Authorization: 'token ' + this.user.token
-      }
-    }).then(function (response) {
-      // handle success
-      console.log(response.data);
-      self.repos = response.data;
-    })["catch"](function (error) {
-      // handle error
-      console.log(error);
-      self.errored = true;
-    })["finally"](function () {
-      // always executed
-      //turn off loader here and display error or repos.
-      self.loading = false;
-    });
+    this.fetchRepos();
   }
 });
 
@@ -6336,6 +6396,25 @@ __webpack_require__.r(__webpack_exports__);
 
 }));
 //# sourceMappingURL=bootstrap.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vuejs-dialog/dist/vuejs-dialog.min.css":
+/*!*********************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vuejs-dialog/dist/vuejs-dialog.min.css ***!
+  \*********************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.fadeTr-enter-active {\n  -webkit-transition: opacity 0.3s ease-in;\n  transition: opacity 0.3s ease-in;\n  -webkit-transition-delay: 0.1s;\n          transition-delay: 0.1s;\n}\n.fadeTr-leave-active {\n  -webkit-transition: opacity 0.1s ease-out;\n  transition: opacity 0.1s ease-out;\n}\n.fadeTr-enter, .fadeTr-leave-to {\n  opacity: 0;\n}\n.slide-enter-active,\n.slide-leave-active {\n  -webkit-transition: all 1s;\n  transition: all 1s;\n}\n.slide-enter,\n.slide-leave-to {\n  opacity: 0;\n  -webkit-transform: translateX(30px);\n          transform: translateX(30px);\n}\n.dg-backdrop-enter-active {\n  -webkit-animation: dg-fadeIn .3s;\n          animation: dg-fadeIn .3s;\n}\n.dg-backdrop-leave-active {\n  -webkit-animation: dg-fadeOut .5s;\n          animation: dg-fadeOut .5s;\n}\n.dg-fade-enter-active {\n  -webkit-animation: dg-fadeIn 0.6s cubic-bezier(0, 0, 0.58, 1);\n          animation: dg-fadeIn 0.6s cubic-bezier(0, 0, 0.58, 1);\n}\n.dg-fade-leave-active {\n  -webkit-animation: dg-fadeOut 0.6s cubic-bezier(0, 0, 0.58, 1);\n          animation: dg-fadeOut 0.6s cubic-bezier(0, 0, 0.58, 1);\n}\n@-webkit-keyframes dg-fadeIn {\n0% {\n    opacity: 0;\n}\n100% {\n    opacity: 1;\n}\n}\n@keyframes dg-fadeIn {\n0% {\n    opacity: 0;\n}\n100% {\n    opacity: 1;\n}\n}\n@-webkit-keyframes dg-fadeOut {\n0% {\n    opacity: 1;\n}\n100% {\n    opacity: 0;\n}\n}\n@keyframes dg-fadeOut {\n0% {\n    opacity: 1;\n}\n100% {\n    opacity: 0;\n}\n}\n.dg-zoom-enter-active {\n  -webkit-animation: dg-zoomIn 0.3s cubic-bezier(0, 0, 0.58, 1);\n          animation: dg-zoomIn 0.3s cubic-bezier(0, 0, 0.58, 1);\n}\n.dg-zoom-leave-active {\n  -webkit-animation: dg-zoomOut 0.4s cubic-bezier(0, 0, 0.58, 1);\n          animation: dg-zoomOut 0.4s cubic-bezier(0, 0, 0.58, 1);\n}\n@-webkit-keyframes dg-zoomIn {\n0% {\n    opacity: 0;\n    -webkit-transform: scale3d(0.3, 0.3, 0.3);\n    transform: scale3d(0.3, 0.3, 0.3);\n}\n50% {\n    opacity: 1;\n}\n}\n@keyframes dg-zoomIn {\n0% {\n    opacity: 0;\n    -webkit-transform: scale3d(0.3, 0.3, 0.3);\n    transform: scale3d(0.3, 0.3, 0.3);\n}\n50% {\n    opacity: 1;\n}\n}\n@-webkit-keyframes dg-zoomOut {\n0% {\n    opacity: 1;\n}\n50% {\n    opacity: 0;\n    -webkit-transform: scale3d(0.3, 0.3, 0.3);\n    transform: scale3d(0.3, 0.3, 0.3);\n}\n100% {\n    opacity: 0;\n}\n}\n@keyframes dg-zoomOut {\n0% {\n    opacity: 1;\n}\n50% {\n    opacity: 0;\n    -webkit-transform: scale3d(0.3, 0.3, 0.3);\n    transform: scale3d(0.3, 0.3, 0.3);\n}\n100% {\n    opacity: 0;\n}\n}\n.dg-bounce-enter-active {\n  -webkit-animation: dg-bounceIn .6s;\n          animation: dg-bounceIn .6s;\n}\n.dg-bounce-leave-active {\n  -webkit-animation: dg-zoomOut .6s;\n          animation: dg-zoomOut .6s;\n}\n@-webkit-keyframes dg-bounceIn {\n0% {\n    opacity: 0;\n    -webkit-transform: scale(0.3);\n            transform: scale(0.3);\n}\n40% {\n    opacity: 1;\n    -webkit-transform: scale(1.06);\n            transform: scale(1.06);\n}\n60% {\n    -webkit-transform: scale(0.92);\n            transform: scale(0.92);\n}\n100% {\n    -webkit-transform: scale(1);\n            transform: scale(1);\n}\n}\n@keyframes dg-bounceIn {\n0% {\n    opacity: 0;\n    -webkit-transform: scale(0.3);\n            transform: scale(0.3);\n}\n40% {\n    opacity: 1;\n    -webkit-transform: scale(1.06);\n            transform: scale(1.06);\n}\n60% {\n    -webkit-transform: scale(0.92);\n            transform: scale(0.92);\n}\n100% {\n    -webkit-transform: scale(1);\n            transform: scale(1);\n}\n}\n@-webkit-keyframes dg-bounceOut {\n0% {\n    -webkit-transform: scale(1);\n            transform: scale(1);\n}\n25% {\n    -webkit-transform: scale(0.95);\n            transform: scale(0.95);\n}\n50% {\n    opacity: 1;\n    -webkit-transform: scale(1.1);\n            transform: scale(1.1);\n}\n100% {\n    opacity: 0;\n    -webkit-transform: scale(0.3);\n            transform: scale(0.3);\n}\n}\n@keyframes dg-bounceOut {\n0% {\n    -webkit-transform: scale(1);\n            transform: scale(1);\n}\n25% {\n    -webkit-transform: scale(0.95);\n            transform: scale(0.95);\n}\n50% {\n    opacity: 1;\n    -webkit-transform: scale(1.1);\n            transform: scale(1.1);\n}\n100% {\n    opacity: 0;\n    -webkit-transform: scale(0.3);\n            transform: scale(0.3);\n}\n}\n.dg-btn-loader {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  top: 0;\n  left: 0;\n}\n.dg-btn-loader .dg-circles {\n    width: 100%;\n    display: block;\n    text-align: center;\n}\n.dg-btn-loader .dg-circle {\n    width: .9em;\n    height: .9em;\n    opacity: 0;\n    background-color: #09a2e3;\n    display: inline-block;\n    border-radius: 50%;\n    -webkit-animation-name: dg-circle-oscillation;\n            animation-name: dg-circle-oscillation;\n    -webkit-animation-duration: 0.5875s;\n            animation-duration: 0.5875s;\n    -webkit-animation-iteration-count: infinite;\n            animation-iteration-count: infinite;\n    -webkit-animation-direction: normal;\n            animation-direction: normal;\n}\n.dg-btn-loader .dg-circle:not(:last-child) {\n      margin-right: 8px;\n}\n.dg-btn-loader .dg-circle:nth-child(1) {\n      -webkit-animation-delay: 0.1195s;\n              animation-delay: 0.1195s;\n}\n.dg-btn-loader .dg-circle:nth-child(2) {\n      -webkit-animation-delay: 0.2755s;\n              animation-delay: 0.2755s;\n}\n.dg-btn-loader .dg-circle:nth-child(3) {\n      -webkit-animation-delay: 0.3485s;\n              animation-delay: 0.3485s;\n}\n@-webkit-keyframes dg-circle-oscillation {\n0% {\n}\n50% {\n    opacity: 1;\n}\n100% {\n}\n}\n@keyframes dg-circle-oscillation {\n0% {\n}\n50% {\n    opacity: 1;\n}\n100% {\n}\n}\nbody.dg-open {\n  width: 100%;\n  height: 100%;\n  overflow: hidden;\n}\n.dg-container * {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.dg-container [disabled] {\n  cursor: not-allowed;\n  opacity: .3;\n}\n.dg-backdrop {\n  background-color: rgba(0, 0, 0, 0.8);\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  z-index: 5000;\n}\n.dg-container {\n  width: 100%;\n  height: 100%;\n  position: fixed;\n  top: 0;\n  left: 0;\n  z-index: 5000;\n}\n.dg-content-cont {\n  width: 100%;\n  font-family: inherit;\n}\n.dg-main-content {\n  width: 98%;\n  /*width: calc(98% - 30px);*/\n  max-width: 400px;\n  padding: 15px;\n  border-radius: 5px;\n  margin: 25px auto;\n  background-color: #ffffff;\n}\n.dg-content {\n  font-size: 16px;\n  line-height: 1.3em;\n}\n.dg-title {\n  margin: 0 0 10px 0;\n  padding: 0;\n  font-size: 18px;\n}\n.dg-content-body {\n  border-bottom: 2px solid #E1E6EA;\n  padding-bottom: 15px;\n}\n.dg-content-footer {\n  position: relative;\n  padding: 15px 0 0;\n}\n.dg-form {\n  background-color: ghostwhite;\n  padding: 10px;\n  margin-bottom: -15px;\n}\n.dg-content-cont--floating {\n  position: absolute;\n  top: 35%;\n  -webkit-transform: translateY(-70%);\n          transform: translateY(-70%);\n  margin-top: 0;\n}\n@media all and (max-height: 700px) {\n.dg-content-cont--floating {\n    position: relative;\n    top: 10%;\n    -webkit-transform: none;\n            transform: none;\n    margin-top: 0;\n}\n}\n.dg-btn {\n  display: inline-block;\n  position: relative;\n  min-width: 80px;\n  padding: 6px 20px;\n  border-radius: 4px;\n  outline: 0;\n  border: 2px solid transparent;\n  text-align: center;\n  text-decoration: none;\n  cursor: pointer;\n  outline: none;\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n  font-size: 16px;\n  font-weight: 700;\n}\n.dg-btn:focus,\n.dg-btn:active,\n.dg-btn:link {\n  outline: none;\n}\n.dg-btn::-moz-focus-inner {\n  border: 0;\n}\n.dg-btn--cancel {\n  color: #fefefe;\n  background-color: #0096D9;\n}\n.dg-btn--ok {\n  color: #0096D9;\n  background-color: #fefefe;\n  border-color: #0096D9;\n}\n.dg-pull-right {\n  float: right;\n}\n.dg-btn.dg-btn--loading .dg-btn-content {\n  visibility: hidden;\n}\n.dg-clear:before {\n  content: ' ';\n  display: block;\n  clear: both;\n}\n.dg-content-body--has-title .dg-content {\n  font-size: 14px;\n}\n.dg-container--has-input .dg-main-content {\n  max-width: 450px;\n}\n.dg-container--has-input .dg-content {\n  margin-bottom: 15px;\n}\n.dg-container--has-input .dg-content-body {\n  border-bottom: none;\n}\n.dg-container--has-input .dg-form {\n  border: 1px solid #E1E6EA;\n  border-bottom: none;\n  border-top-left-radius: 4px;\n  border-top-right-radius: 4px;\n}\n.dg-container--has-input .dg-content-footer {\n  background-color: ghostwhite;\n  border: 1px solid #E1E6EA;\n  border-top: none;\n  border-bottom-left-radius: 4px;\n  border-bottom-right-radius: 4px;\n  padding: 0 10px 10px;\n}\n.dg-container .dg-highlight-1 {\n  color: #FF8C00;\n  font-weight: bold;\n  border-bottom: 1px solid #2ba5ff;\n}\n.dg-container .dg-highlight-2 {\n  color: #2ba5ff;\n  font-weight: bold;\n  border-bottom: 1px solid #FF8C00;\n}\n\n", ""]);
+
+// exports
 
 
 /***/ }),
@@ -37908,154 +37987,189 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "content" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-8" }, [
-        _c("div", { staticClass: "col-md text-center" }, [
-          _c("h2", [
-            _vm._v(
-              "You have " +
-                _vm._s(_vm.user.user.public_repos) +
-                " public repositories."
-            )
-          ]),
-          _vm._v(" "),
-          _c("p", [
-            _vm._v(
-              "Repos have been sorted for those likely to want to be deleted."
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "repos" },
-          [
-            _c(
-              "vue-custom-scrollbar",
-              { staticClass: "scroll-area", attrs: { settings: _vm.settings } },
-              _vm._l(_vm.repos, function(repo) {
-                return _c(
-                  "label",
-                  { key: repo.full_name, staticClass: "repo-item row" },
-                  [
-                    _c("div", { staticClass: "col-md-1" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.selectedRepos,
-                            expression: "selectedRepos"
-                          }
-                        ],
-                        attrs: { type: "checkbox", id: repo.id },
-                        domProps: {
-                          value: repo.full_name,
-                          checked: Array.isArray(_vm.selectedRepos)
-                            ? _vm._i(_vm.selectedRepos, repo.full_name) > -1
-                            : _vm.selectedRepos
-                        },
-                        on: {
-                          change: function($event) {
-                            var $$a = _vm.selectedRepos,
-                              $$el = $event.target,
-                              $$c = $$el.checked ? true : false
-                            if (Array.isArray($$a)) {
-                              var $$v = repo.full_name,
-                                $$i = _vm._i($$a, $$v)
-                              if ($$el.checked) {
-                                $$i < 0 &&
-                                  (_vm.selectedRepos = $$a.concat([$$v]))
-                              } else {
-                                $$i > -1 &&
-                                  (_vm.selectedRepos = $$a
-                                    .slice(0, $$i)
-                                    .concat($$a.slice($$i + 1)))
-                              }
-                            } else {
-                              _vm.selectedRepos = $$c
-                            }
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "checkmark" })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-6" }, [
-                      _c("h4", [_vm._v(_vm._s(repo.full_name))]),
-                      _vm._v(" "),
-                      _c(
-                        "p",
-                        {
-                          directives: [
-                            {
-                              name: "line-clamp",
-                              rawName: "v-line-clamp:20",
-                              value: 2,
-                              expression: "2",
-                              arg: "20"
-                            }
-                          ]
-                        },
-                        [_vm._v(_vm._s(repo.description))]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-5 additional-details" }, [
-                      _c(
-                        "a",
-                        { attrs: { href: repo.html_url, target: "_blank" } },
-                        [_vm._v(_vm._s(repo.html_url))]
-                      ),
-                      _vm._v(" "),
-                      _c("p", [
-                        _vm._v(
-                          "Last updated: " +
-                            _vm._s(_vm._f("moment")(repo.pushed_at, "from"))
-                        )
-                      ])
-                    ])
-                  ]
-                )
-              }),
-              0
-            ),
-            _vm._v(" "),
+      !_vm.completed
+        ? _c("div", { staticClass: "col-md-8" }, [
             _c("div", { staticClass: "col-md text-center" }, [
-              _c("p", [
-                _c("span", { staticClass: "selectedLabel" }, [
-                  _vm._v(_vm._s(_vm.selectedRepos.length))
-                ]),
-                _vm._v(" repo(s) selected for cleaning.\n                    ")
+              _c("h2", [
+                _vm._v(
+                  "You have " +
+                    _vm._s(_vm.user.user.public_repos) +
+                    " public repositories."
+                )
               ]),
               _vm._v(" "),
-              _c(
-                "p",
-                _vm._l(_vm.selectedRepos, function(selected) {
-                  return _c(
-                    "span",
-                    { key: selected.id, staticClass: "selectedRepos" },
-                    [_vm._v(_vm._s(selected))]
+              _c("p", [
+                _vm._v(
+                  "Repos have been sorted for those likely to want to be deleted."
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "repos" },
+              [
+                _c(
+                  "vue-custom-scrollbar",
+                  {
+                    staticClass: "scroll-area",
+                    attrs: { settings: _vm.settings }
+                  },
+                  _vm._l(_vm.repos, function(repo) {
+                    return _c(
+                      "label",
+                      { key: repo.full_name, staticClass: "repo-item row" },
+                      [
+                        _c("div", { staticClass: "col-md-1" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.selectedRepos,
+                                expression: "selectedRepos"
+                              }
+                            ],
+                            attrs: { type: "checkbox", id: repo.id },
+                            domProps: {
+                              value: repo.full_name,
+                              checked: Array.isArray(_vm.selectedRepos)
+                                ? _vm._i(_vm.selectedRepos, repo.full_name) > -1
+                                : _vm.selectedRepos
+                            },
+                            on: {
+                              change: function($event) {
+                                var $$a = _vm.selectedRepos,
+                                  $$el = $event.target,
+                                  $$c = $$el.checked ? true : false
+                                if (Array.isArray($$a)) {
+                                  var $$v = repo.full_name,
+                                    $$i = _vm._i($$a, $$v)
+                                  if ($$el.checked) {
+                                    $$i < 0 &&
+                                      (_vm.selectedRepos = $$a.concat([$$v]))
+                                  } else {
+                                    $$i > -1 &&
+                                      (_vm.selectedRepos = $$a
+                                        .slice(0, $$i)
+                                        .concat($$a.slice($$i + 1)))
+                                  }
+                                } else {
+                                  _vm.selectedRepos = $$c
+                                }
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "checkmark" })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-6" }, [
+                          _c("h4", [_vm._v(_vm._s(repo.full_name))]),
+                          _vm._v(" "),
+                          _c(
+                            "p",
+                            {
+                              directives: [
+                                {
+                                  name: "line-clamp",
+                                  rawName: "v-line-clamp:20",
+                                  value: 2,
+                                  expression: "2",
+                                  arg: "20"
+                                }
+                              ]
+                            },
+                            [_vm._v(_vm._s(repo.description))]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "col-md-5 additional-details" },
+                          [
+                            _c(
+                              "a",
+                              {
+                                attrs: { href: repo.html_url, target: "_blank" }
+                              },
+                              [_vm._v(_vm._s(repo.html_url))]
+                            ),
+                            _vm._v(" "),
+                            _c("p", [
+                              _vm._v(
+                                "Last updated: " +
+                                  _vm._s(
+                                    _vm._f("moment")(repo.pushed_at, "from")
+                                  )
+                              )
+                            ])
+                          ]
+                        )
+                      ]
+                    )
+                  }),
+                  0
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md text-center" }, [
+                  _c("p", [
+                    _c("span", { staticClass: "selectedLabel" }, [
+                      _vm._v(_vm._s(_vm.selectedRepos.length))
+                    ]),
+                    _vm._v(
+                      " repo(s) selected for cleaning.\n                    "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "p",
+                    _vm._l(_vm.selectedRepos, function(selected) {
+                      return _c(
+                        "span",
+                        { key: selected.id, staticClass: "selectedRepos" },
+                        [_vm._v(_vm._s(selected))]
+                      )
+                    }),
+                    0
                   )
-                }),
-                0
+                ])
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "text-center" }, [
+              _c(
+                "button",
+                {
+                  directives: [
+                    {
+                      name: "confirm",
+                      rawName: "v-confirm",
+                      value: {
+                        loader: true,
+                        ok: _vm.okCallback,
+                        cancel: _vm.cancelCallback,
+                        message: _vm.message
+                      },
+                      expression:
+                        "{loader: true,\n                                    ok: okCallback,\n                                    cancel: cancelCallback,\n                                    message: message}"
+                    }
+                  ],
+                  staticClass: "deleteRepos",
+                  attrs: { disabled: !_vm.selectedRepos.length }
+                },
+                [
+                  _vm._v(
+                    "\n                        Delete Repos\n                "
+                  )
+                ]
               )
             ])
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "text-center" }, [
-          _c(
-            "button",
-            {
-              staticClass: "deleteRepos",
-              attrs: { disabled: !_vm.selectedRepos.length }
-            },
-            [_vm._v("Delete Repos")]
-          )
-        ])
-      ])
+          ])
+        : _c("div", { staticClass: "col-md-8" }, [
+            _vm._v("\n            Operation completed.\n        ")
+          ])
     ])
   ])
 }
@@ -54853,6 +54967,58 @@ if (false) {} else {
 
 /***/ }),
 
+/***/ "./node_modules/vuejs-dialog/dist/vuejs-dialog-mixin.min.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/vuejs-dialog/dist/vuejs-dialog-mixin.min.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+!function(t,e){ true?module.exports=e():undefined}(window,function(){return function(t){var e={};function n(o){if(e[o])return e[o].exports;var i=e[o]={i:o,l:!1,exports:{}};return t[o].call(i.exports,i,i.exports,n),i.l=!0,i.exports}return n.m=t,n.c=e,n.d=function(t,e,o){n.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:o})},n.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},n.t=function(t,e){if(1&e&&(t=n(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var o=Object.create(null);if(n.r(o),Object.defineProperty(o,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var i in t)n.d(o,i,function(e){return t[e]}.bind(null,i));return o},n.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(e,"a",e),e},n.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},n.p="/dist/",n(n.s=13)}({1:function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var o=e.DIALOG_TYPES={ALERT:"alert",CONFIRM:"confirm",PROMPT:"prompt"},i=e.CONFIRM_TYPES={BASIC:"basic",SOFT:"soft",HARD:"hard"};e.ANIMATION_TYPES={FADE:"dg-fade",ZOOM:"dg-zoom",BOUNCE:"dg-bounce"},e.CLASS_TYPES={MAIN_CONTENT:"mainContent",BODY:"body",TITLE:"title",FOOTER:"footer",OK_BTN:"okBtn",CANCEL_BTN:"cancelBtn"},e.DEFAULT_OPTIONS={html:!1,loader:!1,reverse:!1,backdropClose:!1,okText:"Continue",cancelText:"Close",view:null,type:i.BASIC,window:o.CONFIRM,message:"Proceed with the request?",clicksCount:3,animation:"zoom",customClass:"",verification:"continue",verificationHelp:'Type "[+:verification]" below to confirm',promptHelp:'Type in the box below and click "[+:okText]"'}},13:function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var o=n(1),i=s(n(14)),r=s(n(15));function s(t){return t&&t.__esModule?t:{default:t}}e.default={data:function(){return{input:"",loading:!1}},props:{options:{type:Object,required:!0}},computed:{loaderEnabled:function(){return!!this.options.loader},isHardConfirm:function(){return this.options.window===o.DIALOG_TYPES.CONFIRM&&this.options.type===o.CONFIRM_TYPES.HARD},isPrompt:function(){return this.options.window===o.DIALOG_TYPES.PROMPT},leftBtnComponent:function(){return!1===this.options.reverse?"cancel-btn":"ok-btn"},rightBtnComponent:function(){return!0===this.options.reverse?"cancel-btn":"ok-btn"},hardConfirmHelpText:function(){var t=this;return this.options.verificationHelp.replace(/\[\+:(\w+)]/g,function(e,n){return t.options[n]||e})},promptHelpText:function(){var t=this;return this.options.promptHelp.replace(/\[\+:(\w+)]/g,function(e,n){return t.options[n]||e})}},mounted:function(){this.isHardConfirm&&this.$refs.inputElem&&this.$refs.inputElem.focus()},methods:{clickRightBtn:function(){this.options.reverse?this.cancel():this.proceed(this.getDefaultData())},clickLeftBtn:function(){this.options.reverse?this.proceed(this.getDefaultData()):this.cancel()},submitDialogForm:function(){this.okBtnDisabled||this.proceed()},getDefaultData:function(){return this.isPrompt?this.input:null},proceed:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:null;this.loaderEnabled?(this.switchLoadingState(!0),this.options.promiseResolver({close:this.close,loading:this.switchLoadingState,data:t})):(this.options.promiseResolver({data:t}),this.close())},cancel:function(){!0!==this.loading&&this.close()},switchLoadingState:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:null;null===t&&(t=!this.loading),this.loading=!!t},close:function(){this.$emit("close")}},mixins:[i.default,r.default]}},14:function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var o="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t};e.default={computed:{messageHasTitle:function(){var t=this.options.message;return"object"===(void 0===t?"undefined":o(t))&&null!==t&&t.title},messageTitle:function(){return this.messageHasTitle?this.options.message.title:null},messageBody:function(){var t=this.options.message;return"string"==typeof t?t:t.body||""}}}},15:function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var o=n(1);e.default={computed:{cancelBtnDisabled:function(){return this.options.window===o.DIALOG_TYPES.ALERT},okBtnDisabled:function(){return this.options.window===o.DIALOG_TYPES.CONFIRM&&this.options.type===o.CONFIRM_TYPES.HARD&&this.input!==this.options.verification},leftBtnEnabled:function(){return!1===this.cancelBtnDisabled||!0===this.options.reverse},rightBtnEnabled:function(){return!1===this.cancelBtnDisabled||!1===this.options.reverse},leftBtnFocus:function(){return!this.isHardConfirm&&!0===this.options.reverse},rightBtnFocus:function(){return!this.isHardConfirm&&!1===this.options.reverse},leftBtnText:function(){return this.options.reverse?this.options.okText:this.options.cancelText},rightBtnText:function(){return this.options.reverse?this.options.cancelText:this.options.okText}}}}})});
+
+/***/ }),
+
+/***/ "./node_modules/vuejs-dialog/dist/vuejs-dialog.min.css":
+/*!*************************************************************!*\
+  !*** ./node_modules/vuejs-dialog/dist/vuejs-dialog.min.css ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../css-loader??ref--6-1!../../postcss-loader/src??ref--6-2!./vuejs-dialog.min.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vuejs-dialog/dist/vuejs-dialog.min.css");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/vuejs-dialog/dist/vuejs-dialog.min.js":
+/*!************************************************************!*\
+  !*** ./node_modules/vuejs-dialog/dist/vuejs-dialog.min.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+!function(t,e){ true?module.exports=e():undefined}(window,function(){return function(t){var e={};function n(o){if(e[o])return e[o].exports;var i=e[o]={i:o,l:!1,exports:{}};return t[o].call(i.exports,i,i.exports,n),i.l=!0,i.exports}return n.m=t,n.c=e,n.d=function(t,e,o){n.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:o})},n.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},n.t=function(t,e){if(1&e&&(t=n(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var o=Object.create(null);if(n.r(o),Object.defineProperty(o,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var i in t)n.d(o,i,function(e){return t[e]}.bind(null,i));return o},n.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(e,"a",e),e},n.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},n.p="/dist/",n(n.s=23)}([function(t,e,n){"use strict";function o(t,e,n,o,i,r,s,c){var a,u="function"==typeof t?t.options:t;if(e&&(u.render=e,u.staticRenderFns=n,u._compiled=!0),o&&(u.functional=!0),r&&(u._scopeId="data-v-"+r),s?(a=function(t){(t=t||this.$vnode&&this.$vnode.ssrContext||this.parent&&this.parent.$vnode&&this.parent.$vnode.ssrContext)||"undefined"==typeof __VUE_SSR_CONTEXT__||(t=__VUE_SSR_CONTEXT__),i&&i.call(this,t),t&&t._registeredComponents&&t._registeredComponents.add(s)},u._ssrRegister=a):i&&(a=c?function(){i.call(this,this.$root.$options.shadowRoot)}:i),a)if(u.functional){u._injectStyles=a;var l=u.render;u.render=function(t,e){return a.call(e),l(t,e)}}else{var f=u.beforeCreate;u.beforeCreate=f?[].concat(f,a):[a]}return{exports:t,options:u}}n.d(e,"a",function(){return o})},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var o=e.DIALOG_TYPES={ALERT:"alert",CONFIRM:"confirm",PROMPT:"prompt"},i=e.CONFIRM_TYPES={BASIC:"basic",SOFT:"soft",HARD:"hard"};e.ANIMATION_TYPES={FADE:"dg-fade",ZOOM:"dg-zoom",BOUNCE:"dg-bounce"},e.CLASS_TYPES={MAIN_CONTENT:"mainContent",BODY:"body",TITLE:"title",FOOTER:"footer",OK_BTN:"okBtn",CANCEL_BTN:"cancelBtn"},e.DEFAULT_OPTIONS={html:!1,loader:!1,reverse:!1,backdropClose:!1,okText:"Continue",cancelText:"Close",view:null,type:i.BASIC,window:o.CONFIRM,message:"Proceed with the request?",clicksCount:3,animation:"zoom",customClass:"",verification:"continue",verificationHelp:'Type "[+:verification]" below to confirm',promptHelp:'Type in the box below and click "[+:okText]"'}},function(t,e,n){"use strict";n.r(e);var o=n(3),i=n.n(o);for(var r in o)"default"!==r&&function(t){n.d(e,t,function(){return o[t]})}(r);e.default=i.a},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var o=function(t){return t&&t.__esModule?t:{default:t}}(n(29)),i=n(16);e.default={data:function(){return{dialogsARR:[],registeredViews:{}}},created:function(){document.addEventListener("keydown",this.escapeKeyListener)},destroyed:function(){document.removeEventListener("keydown",this.escapeKeyListener)},watch:{dialogsARR:{handler:function(t){var e=document.getElementsByTagName("body")[0];e&&(t.length&&!e.classList.contains("dg-open")?e.classList.add("dg-open"):!t.length&&e&&e.classList.contains("dg-open")&&e.classList.remove("dg-open"))}}},methods:{commit:function(t){t.escapeKeyClose=!1,this.dialogsARR.push(t)},forceCloseAll:function(){var t=this;this.dialogsARR.forEach(function(e,n){return t.$delete(t.dialogsARR,n)})},destroyDialog:function(t){var e=(0,i.firstIndex)(this.dialogsARR,t,"id");-1!==e&&this.$delete(this.dialogsARR,e)},escapeKeyListener:function(t){if(27===t.keyCode){var e=-1+this.dialogsARR.length;e>-1&&this.$set(this.dialogsARR[e],"escapeKeyClose",!0)}}},components:{DialogWindow:o.default}}},function(t,e,n){"use strict";n.r(e);var o=n(5),i=n.n(o);for(var r in o)"default"!==r&&function(t){n.d(e,t,function(){return o[t]})}(r);e.default=i.a},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var o=function(t){return t&&t.__esModule?t:{default:t}}(n(30)),i=n(1);e.default={data:function(){return{show:!0,closed:!1,endedAnimations:[]}},props:{options:{type:Object,required:!0},escapeKeyClose:{type:Boolean,default:!1},registeredViews:{type:Object,default:function(){return{}}}},watch:{escapeKeyClose:function(t){!0===t&&(this.cancelBtnDisabled?this.proceed():this.cancel())}},computed:{animation:function(){var t=this.options.animation.toUpperCase();return i.ANIMATION_TYPES.hasOwnProperty(t)?i.ANIMATION_TYPES[t]:i.ANIMATION_TYPES.ZOOM},loaderEnabled:function(){return!!this.options.loader},dialogView:function(){return(this.options.view?this.registeredViews[this.options.view]:null)||o.default},isHardConfirm:function(){return this.options.window===i.DIALOG_TYPES.CONFIRM&&this.options.type===i.CONFIRM_TYPES.HARD},isPrompt:function(){return this.options.window===i.DIALOG_TYPES.PROMPT}},methods:{closeAtOutsideClick:function(){!0===this.options.backdropClose&&(this.cancelBtnDisabled?this.proceed():this.cancel())},proceed:function(){this.loaderEnabled?(this.switchLoadingState(!0),this.options.promiseResolver({close:this.close,loading:this.switchLoadingState})):(this.options.promiseResolver(!0),this.close())},cancel:function(){!0!==this.loading&&this.close()},close:function(){this.show=!1,this.closed=!0},animationEnded:function(t){this.endedAnimations.push(t),-1!==this.endedAnimations.indexOf("backdrop")&&-1!==this.endedAnimations.indexOf("content")&&(this.options.promiseRejecter(!1),this.$emit("close",this.options.id))}},beforeDestroy:function(){!1===this.closed&&(this.cancelBtnDisabled?this.proceed():this.cancel())}}},function(t,e,n){"use strict";n.r(e);var o=n(7),i=n.n(o);for(var r in o)"default"!==r&&function(t){n.d(e,t,function(){return o[t]})}(r);e.default=i.a},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var o=s(n(13)),i=s(n(31)),r=s(n(32));function s(t){return t&&t.__esModule?t:{default:t}}e.default={data:function(){return{}},mixins:[o.default],mounted:function(){this.isHardConfirm&&this.$refs.inputElem&&this.$refs.inputElem.focus()},components:{CancelBtn:r.default,OkBtn:i.default}}},function(t,e,n){"use strict";n.r(e);var o=n(9),i=n.n(o);for(var r in o)"default"!==r&&function(t){n.d(e,t,function(){return o[t]})}(r);e.default=i.a},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var o=function(t){return t&&t.__esModule?t:{default:t}}(n(36)),i=n(1);e.default={data:function(){return{clicks_count:0}},props:{enabled:{required:!1,type:Boolean,default:!0},options:{required:!0,type:Object},focus:{required:!1,type:Boolean,default:!1},loading:{required:!1,type:Boolean,default:!1}},mounted:function(){this.focus&&this.$refs.btn.focus()},computed:{soft_confirm:function(){return this.options.type===i.CONFIRM_TYPES.SOFT},hard_confirm:function(){return this.options.type===i.CONFIRM_TYPES.HARD},is_disabled:function(){return this.$parent.okBtnDisabled},clicks_remaining:function(){return Math.max(this.options.clicksCount-this.clicks_count,0)}},methods:{proceed:function(){!this.is_disabled&&this.validateProceed()&&this.$emit("click")},validateProceed:function(){switch(this.options.type){case i.CONFIRM_TYPES.SOFT:return this.clicks_count++,this.clicks_count>=this.options.clicksCount;case i.CONFIRM_TYPES.BASIC:default:return!0}}},components:{BtnLoader:o.default}}},function(t,e,n){"use strict";n.r(e);var o=n(11),i=n.n(o);for(var r in o)"default"!==r&&function(t){n.d(e,t,function(){return o[t]})}(r);e.default=i.a},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.default={props:{enabled:{required:!1,type:Boolean,default:!0},options:{required:!0,type:Object},focus:{required:!1,type:Boolean,default:!1},loading:{required:!1,type:Boolean,default:!1}},mounted:function(){this.focus&&this.$refs.btn.focus()}}},function(t,e,n){},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var o=n(1),i=s(n(14)),r=s(n(15));function s(t){return t&&t.__esModule?t:{default:t}}e.default={data:function(){return{input:"",loading:!1}},props:{options:{type:Object,required:!0}},computed:{loaderEnabled:function(){return!!this.options.loader},isHardConfirm:function(){return this.options.window===o.DIALOG_TYPES.CONFIRM&&this.options.type===o.CONFIRM_TYPES.HARD},isPrompt:function(){return this.options.window===o.DIALOG_TYPES.PROMPT},leftBtnComponent:function(){return!1===this.options.reverse?"cancel-btn":"ok-btn"},rightBtnComponent:function(){return!0===this.options.reverse?"cancel-btn":"ok-btn"},hardConfirmHelpText:function(){var t=this;return this.options.verificationHelp.replace(/\[\+:(\w+)]/g,function(e,n){return t.options[n]||e})},promptHelpText:function(){var t=this;return this.options.promptHelp.replace(/\[\+:(\w+)]/g,function(e,n){return t.options[n]||e})}},mounted:function(){this.isHardConfirm&&this.$refs.inputElem&&this.$refs.inputElem.focus()},methods:{clickRightBtn:function(){this.options.reverse?this.cancel():this.proceed(this.getDefaultData())},clickLeftBtn:function(){this.options.reverse?this.proceed(this.getDefaultData()):this.cancel()},submitDialogForm:function(){this.okBtnDisabled||this.proceed()},getDefaultData:function(){return this.isPrompt?this.input:null},proceed:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:null;this.loaderEnabled?(this.switchLoadingState(!0),this.options.promiseResolver({close:this.close,loading:this.switchLoadingState,data:t})):(this.options.promiseResolver({data:t}),this.close())},cancel:function(){!0!==this.loading&&this.close()},switchLoadingState:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:null;null===t&&(t=!this.loading),this.loading=!!t},close:function(){this.$emit("close")}},mixins:[i.default,r.default]}},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var o="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t};e.default={computed:{messageHasTitle:function(){var t=this.options.message;return"object"===(void 0===t?"undefined":o(t))&&null!==t&&t.title},messageTitle:function(){return this.messageHasTitle?this.options.message.title:null},messageBody:function(){var t=this.options.message;return"string"==typeof t?t:t.body||""}}}},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var o=n(1);e.default={computed:{cancelBtnDisabled:function(){return this.options.window===o.DIALOG_TYPES.ALERT},okBtnDisabled:function(){return this.options.window===o.DIALOG_TYPES.CONFIRM&&this.options.type===o.CONFIRM_TYPES.HARD&&this.input!==this.options.verification},leftBtnEnabled:function(){return!1===this.cancelBtnDisabled||!0===this.options.reverse},rightBtnEnabled:function(){return!1===this.cancelBtnDisabled||!1===this.options.reverse},leftBtnFocus:function(){return!this.isHardConfirm&&!0===this.options.reverse},rightBtnFocus:function(){return!this.isHardConfirm&&!1===this.options.reverse},leftBtnText:function(){return this.options.reverse?this.options.okText:this.options.cancelText},rightBtnText:function(){return this.options.reverse?this.options.cancelText:this.options.okText}}}},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.getElem=function(t){return arguments.length>1&&void 0!==arguments[1]&&arguments[1]?document.querySelectorAll(t):document.querySelector(t)};e.noop=function(){};var o=e.cloneObj=function(t){return Object.assign({},t)};e.mergeObjs=function(){for(var t=[],e=0;e<arguments.length;e++)t.push(arguments[e]);return Object.assign.apply(Object,function(t){if(Array.isArray(t)){for(var e=0,n=Array(t.length);e<t.length;e++)n[e]=t[e];return n}return Array.from(t)}(t.map(o)))},e.clickNode=function(t){if(document.createEvent){var e=document.createEvent("MouseEvents");e.initEvent("click",!0,!1),t.dispatchEvent(e)}else document.createEventObject?t.fireEvent("onclick"):"function"==typeof t.onclick&&t.onclick()},e.firstIndex=function(t,e,n){var o=void 0,i=t.length;for(o=0;o<i;o++)if(t[o][n]===e)return o;return-1}},function(t,e,n){"use strict";var o=function(){var t=this,e=t.$createElement,n=t._self._c||e;return n("div",t._l(t.dialogsARR,function(e){return n("dialog-window",{key:e.id,attrs:{options:e,escapeKeyClose:e.escapeKeyClose,registeredViews:t.registeredViews},on:{close:t.destroyDialog}})}))},i=[];n.d(e,"a",function(){return o}),n.d(e,"b",function(){return i})},function(t,e,n){"use strict";var o=function(){var t=this,e=t.$createElement,n=t._self._c||e;return n("div",{class:t.options.customClass},[n("transition",{attrs:{name:"dg-backdrop",appear:""},on:{"after-leave":function(e){t.animationEnded("backdrop")}}},[t.show?n("div",{staticClass:"dg-backdrop"}):t._e()]),t._v(" "),n("transition",{attrs:{name:t.animation,appear:""},on:{"after-leave":function(e){t.animationEnded("content")}}},[t.show?n("div",{class:["dg-container",{"dg-container--has-input":t.isHardConfirm||t.isPrompt}],on:{click:t.closeAtOutsideClick}},[n("div",{staticClass:"dg-content-cont dg-content-cont--floating"},[n("div",{staticClass:"dg-main-content",on:{click:function(t){t.stopPropagation()}}},[n(t.dialogView,{tag:"component",attrs:{options:t.options},on:{close:t.close}})],1)])]):t._e()])],1)},i=[];n.d(e,"a",function(){return o}),n.d(e,"b",function(){return i})},function(t,e,n){"use strict";var o=function(){var t=this,e=t.$createElement,n=t._self._c||e;return n("div",{staticClass:"dg-view-wrapper"},[n("div",{class:["dg-content-body",{"dg-content-body--has-title":t.messageHasTitle}]},[t.messageHasTitle?[t.options.html?n("h6",{staticClass:"dg-title",domProps:{innerHTML:t._s(t.messageTitle)}}):n("h6",{staticClass:"dg-title"},[t._v(t._s(t.messageTitle))])]:t._e(),t._v(" "),t.options.html?n("div",{staticClass:"dg-content",domProps:{innerHTML:t._s(t.messageBody)}}):n("div",{staticClass:"dg-content"},[t._v(t._s(t.messageBody))]),t._v(" "),t.isHardConfirm||t.isPrompt?n("form",{staticClass:"dg-form",attrs:{autocomplete:"off"},on:{submit:function(e){return e.preventDefault(),t.submitDialogForm(e)}}},[n("label",{staticStyle:{"font-size":"13px"},attrs:{for:"dg-input-elem"}},[t._v(t._s(t.isPrompt?t.promptHelpText:t.hardConfirmHelpText))]),t._v(" "),n("input",{directives:[{name:"model",rawName:"v-model",value:t.input,expression:"input"}],ref:"inputElem",staticStyle:{width:"100%","margin-top":"10px",padding:"5px 15px","font-size":"16px","border-radius":"4px",border:"2px solid #eee"},attrs:{type:"text",placeholder:t.isPrompt?"":t.options.verification,autocomplete:"off",id:"dg-input-elem"},domProps:{value:t.input},on:{input:function(e){e.target.composing||(t.input=e.target.value)}}})]):t._e()],2),t._v(" "),n("div",{staticClass:"dg-content-footer"},[n(t.leftBtnComponent,{tag:"button",attrs:{loading:t.loading,enabled:t.leftBtnEnabled,options:t.options,focus:t.leftBtnFocus},on:{click:function(e){t.clickLeftBtn()}}},[t.options.html?n("span",{domProps:{innerHTML:t._s(t.leftBtnText)}}):n("span",[t._v(t._s(t.leftBtnText))])]),t._v(" "),n(t.rightBtnComponent,{tag:"button",attrs:{loading:t.loading,enabled:t.rightBtnEnabled,options:t.options,focus:t.rightBtnFocus},on:{click:function(e){t.clickRightBtn()}}},[t.options.html?n("span",{domProps:{innerHTML:t._s(t.rightBtnText)}}):n("span",[t._v(t._s(t.rightBtnText))])]),t._v(" "),n("div",{staticClass:"dg-clear"})])])},i=[];n.d(e,"a",function(){return o}),n.d(e,"b",function(){return i})},function(t,e,n){"use strict";var o=function(){var t=this,e=t.$createElement,n=t._self._c||e;return t.enabled?n("button",{ref:"btn",class:["dg-btn","dg-btn--ok",{"dg-btn--loading":t.loading},{"dg-pull-right":!t.options.reverse}],attrs:{disabled:t.is_disabled},on:{click:function(e){e.preventDefault(),t.proceed()}}},[n("span",{staticClass:"dg-btn-content"},[t._t("default"),t._v(" "),t.soft_confirm?n("span",[t._v("("+t._s(t.clicks_remaining)+")")]):t._e()],2),t._v(" "),t.loading?n("btn-loader",{tag:"span"}):t._e()]):t._e()},i=[];n.d(e,"a",function(){return o}),n.d(e,"b",function(){return i})},function(t,e,n){"use strict";var o=function(){var t=this,e=t.$createElement,n=t._self._c||e;return t.enabled?n("button",{ref:"btn",class:["dg-btn","dg-btn--cancel",{"dg-pull-right":t.options.reverse}],on:{click:function(e){e.preventDefault(),t.$emit("click")}}},[t._t("default")],2):t._e()},i=[];n.d(e,"a",function(){return o}),n.d(e,"b",function(){return i})},function(t,e){var n;n=function(){return this}();try{n=n||Function("return this")()||(0,eval)("this")}catch(t){"object"==typeof window&&(n=window)}t.exports=n},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var o=a(n(24)),i=a(n(28)),r=n(1),s=a(n(35)),c=n(16);function a(t){return t&&t.__esModule?t:{default:t}}var u={},l=function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};this.Vue=t,this.mounted=!1,this.$root={},this.registeredViews={},this.globalOptions=(0,c.mergeObjs)(r.DEFAULT_OPTIONS,e)};l.prototype.mountIfNotMounted=function(){var t=this;!0!==this.mounted&&(this.$root=function(){var e=t.Vue.extend(i.default),n=document.createElement("div");document.querySelector("body").appendChild(n);var o=new e;return o.registeredViews=t.registeredComponents(),o.$mount(n)}(),this.mounted=!0)},l.prototype.registeredComponents=function(){return u},l.prototype.registerComponent=function(t,e){this.mounted&&this.destroy(),u[t]=e},l.prototype.destroy=function(){if(!0===this.mounted){this.$root.forceCloseAll();var t=this.$root.$el;this.$root.$destroy(),this.$root.$off(),t.remove(),this.mounted=!1}},l.prototype.alert=function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:null,e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};return t&&(e.message=t),this.open(r.DIALOG_TYPES.ALERT,e)},l.prototype.prompt=function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:null,e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};return t&&(e.message=t),this.open(r.DIALOG_TYPES.PROMPT,e)},l.prototype.confirm=function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:null,e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};return t&&(e.message=t),this.open(r.DIALOG_TYPES.CONFIRM,e)},l.prototype.open=function(t){var e=this,n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};return this.mountIfNotMounted(),new o.default(function(o,i){n.id="dialog."+Date.now(),n.window=t,n.promiseResolver=o,n.promiseRejecter=i,e.$root.commit((0,c.mergeObjs)(e.globalOptions,n))})},l.install=function(t,e){var n=new s.default(t);t.directive("confirm",n.confirmDefinition),t.dialog=new l(t,e),Object.defineProperties(t.prototype,{$dialog:{get:function(){return t.dialog}}})},e.default=l},function(t,e,n){(function(e){!function(n){var o=setTimeout;function i(){}function r(t){if(!(this instanceof r))throw new TypeError("Promises must be constructed via new");if("function"!=typeof t)throw new TypeError("not a function");this._state=0,this._handled=!1,this._value=void 0,this._deferreds=[],l(t,this)}function s(t,e){for(;3===t._state;)t=t._value;0!==t._state?(t._handled=!0,r._immediateFn(function(){var n=1===t._state?e.onFulfilled:e.onRejected;if(null!==n){var o;try{o=n(t._value)}catch(t){return void a(e.promise,t)}c(e.promise,o)}else(1===t._state?c:a)(e.promise,t._value)})):t._deferreds.push(e)}function c(t,e){try{if(e===t)throw new TypeError("A promise cannot be resolved with itself.");if(e&&("object"==typeof e||"function"==typeof e)){var n=e.then;if(e instanceof r)return t._state=3,t._value=e,void u(t);if("function"==typeof n)return void l(function(t,e){return function(){t.apply(e,arguments)}}(n,e),t)}t._state=1,t._value=e,u(t)}catch(e){a(t,e)}}function a(t,e){t._state=2,t._value=e,u(t)}function u(t){2===t._state&&0===t._deferreds.length&&r._immediateFn(function(){t._handled||r._unhandledRejectionFn(t._value)});for(var e=0,n=t._deferreds.length;e<n;e++)s(t,t._deferreds[e]);t._deferreds=null}function l(t,e){var n=!1;try{t(function(t){n||(n=!0,c(e,t))},function(t){n||(n=!0,a(e,t))})}catch(t){if(n)return;n=!0,a(e,t)}}r.prototype.catch=function(t){return this.then(null,t)},r.prototype.then=function(t,e){var n=new this.constructor(i);return s(this,new function(t,e,n){this.onFulfilled="function"==typeof t?t:null,this.onRejected="function"==typeof e?e:null,this.promise=n}(t,e,n)),n},r.all=function(t){return new r(function(e,n){if(!t||void 0===t.length)throw new TypeError("Promise.all accepts an array");var o=Array.prototype.slice.call(t);if(0===o.length)return e([]);var i=o.length;function r(t,s){try{if(s&&("object"==typeof s||"function"==typeof s)){var c=s.then;if("function"==typeof c)return void c.call(s,function(e){r(t,e)},n)}o[t]=s,0==--i&&e(o)}catch(t){n(t)}}for(var s=0;s<o.length;s++)r(s,o[s])})},r.resolve=function(t){return t&&"object"==typeof t&&t.constructor===r?t:new r(function(e){e(t)})},r.reject=function(t){return new r(function(e,n){n(t)})},r.race=function(t){return new r(function(e,n){for(var o=0,i=t.length;o<i;o++)t[o].then(e,n)})},r._immediateFn="function"==typeof e&&function(t){e(t)}||function(t){o(t,0)},r._unhandledRejectionFn=function(t){"undefined"!=typeof console&&console&&console.warn("Possible Unhandled Promise Rejection:",t)},r._setImmediateFn=function(t){r._immediateFn=t},r._setUnhandledRejectionFn=function(t){r._unhandledRejectionFn=t},void 0!==t&&t.exports?t.exports=r:n.Promise||(n.Promise=r)}(this)}).call(this,n(25).setImmediate)},function(t,e,n){(function(t){var o=void 0!==t&&t||"undefined"!=typeof self&&self||window,i=Function.prototype.apply;function r(t,e){this._id=t,this._clearFn=e}e.setTimeout=function(){return new r(i.call(setTimeout,o,arguments),clearTimeout)},e.setInterval=function(){return new r(i.call(setInterval,o,arguments),clearInterval)},e.clearTimeout=e.clearInterval=function(t){t&&t.close()},r.prototype.unref=r.prototype.ref=function(){},r.prototype.close=function(){this._clearFn.call(o,this._id)},e.enroll=function(t,e){clearTimeout(t._idleTimeoutId),t._idleTimeout=e},e.unenroll=function(t){clearTimeout(t._idleTimeoutId),t._idleTimeout=-1},e._unrefActive=e.active=function(t){clearTimeout(t._idleTimeoutId);var e=t._idleTimeout;e>=0&&(t._idleTimeoutId=setTimeout(function(){t._onTimeout&&t._onTimeout()},e))},n(26),e.setImmediate="undefined"!=typeof self&&self.setImmediate||void 0!==t&&t.setImmediate||this&&this.setImmediate,e.clearImmediate="undefined"!=typeof self&&self.clearImmediate||void 0!==t&&t.clearImmediate||this&&this.clearImmediate}).call(this,n(22))},function(t,e,n){(function(t,e){!function(t,n){"use strict";if(!t.setImmediate){var o,i=1,r={},s=!1,c=t.document,a=Object.getPrototypeOf&&Object.getPrototypeOf(t);a=a&&a.setTimeout?a:t,"[object process]"==={}.toString.call(t.process)?o=function(t){e.nextTick(function(){l(t)})}:function(){if(t.postMessage&&!t.importScripts){var e=!0,n=t.onmessage;return t.onmessage=function(){e=!1},t.postMessage("","*"),t.onmessage=n,e}}()?function(){var e="setImmediate$"+Math.random()+"$",n=function(n){n.source===t&&"string"==typeof n.data&&0===n.data.indexOf(e)&&l(+n.data.slice(e.length))};t.addEventListener?t.addEventListener("message",n,!1):t.attachEvent("onmessage",n),o=function(n){t.postMessage(e+n,"*")}}():t.MessageChannel?function(){var t=new MessageChannel;t.port1.onmessage=function(t){l(t.data)},o=function(e){t.port2.postMessage(e)}}():c&&"onreadystatechange"in c.createElement("script")?function(){var t=c.documentElement;o=function(e){var n=c.createElement("script");n.onreadystatechange=function(){l(e),n.onreadystatechange=null,t.removeChild(n),n=null},t.appendChild(n)}}():o=function(t){setTimeout(l,0,t)},a.setImmediate=function(t){"function"!=typeof t&&(t=new Function(""+t));for(var e=new Array(arguments.length-1),n=0;n<e.length;n++)e[n]=arguments[n+1];var s={callback:t,args:e};return r[i]=s,o(i),i++},a.clearImmediate=u}function u(t){delete r[t]}function l(t){if(s)setTimeout(l,0,t);else{var e=r[t];if(e){s=!0;try{!function(t){var e=t.callback,o=t.args;switch(o.length){case 0:e();break;case 1:e(o[0]);break;case 2:e(o[0],o[1]);break;case 3:e(o[0],o[1],o[2]);break;default:e.apply(n,o)}}(e)}finally{u(t),s=!1}}}}}("undefined"==typeof self?void 0===t?this:t:self)}).call(this,n(22),n(27))},function(t,e){var n,o,i=t.exports={};function r(){throw new Error("setTimeout has not been defined")}function s(){throw new Error("clearTimeout has not been defined")}function c(t){if(n===setTimeout)return setTimeout(t,0);if((n===r||!n)&&setTimeout)return n=setTimeout,setTimeout(t,0);try{return n(t,0)}catch(e){try{return n.call(null,t,0)}catch(e){return n.call(this,t,0)}}}!function(){try{n="function"==typeof setTimeout?setTimeout:r}catch(t){n=r}try{o="function"==typeof clearTimeout?clearTimeout:s}catch(t){o=s}}();var a,u=[],l=!1,f=-1;function d(){l&&a&&(l=!1,a.length?u=a.concat(u):f=-1,u.length&&p())}function p(){if(!l){var t=c(d);l=!0;for(var e=u.length;e;){for(a=u,u=[];++f<e;)a&&a[f].run();f=-1,e=u.length}a=null,l=!1,function(t){if(o===clearTimeout)return clearTimeout(t);if((o===s||!o)&&clearTimeout)return o=clearTimeout,clearTimeout(t);try{o(t)}catch(e){try{return o.call(null,t)}catch(e){return o.call(this,t)}}}(t)}}function h(t,e){this.fun=t,this.array=e}function m(){}i.nextTick=function(t){var e=new Array(arguments.length-1);if(arguments.length>1)for(var n=1;n<arguments.length;n++)e[n-1]=arguments[n];u.push(new h(t,e)),1!==u.length||l||c(p)},h.prototype.run=function(){this.fun.apply(null,this.array)},i.title="browser",i.browser=!0,i.env={},i.argv=[],i.version="",i.versions={},i.on=m,i.addListener=m,i.once=m,i.off=m,i.removeListener=m,i.removeAllListeners=m,i.emit=m,i.prependListener=m,i.prependOnceListener=m,i.listeners=function(t){return[]},i.binding=function(t){throw new Error("process.binding is not supported")},i.cwd=function(){return"/"},i.chdir=function(t){throw new Error("process.chdir is not supported")},i.umask=function(){return 0}},function(t,e,n){"use strict";n.r(e);var o=n(17),i=n(2);for(var r in i)"default"!==r&&function(t){n.d(e,t,function(){return i[t]})}(r);n(33);var s=n(0),c=Object(s.a)(i.default,o.a,o.b,!1,null,null,null);e.default=c.exports},function(t,e,n){"use strict";n.r(e);var o=n(18),i=n(4);for(var r in i)"default"!==r&&function(t){n.d(e,t,function(){return i[t]})}(r);var s=n(0),c=Object(s.a)(i.default,o.a,o.b,!1,null,null,null);e.default=c.exports},function(t,e,n){"use strict";n.r(e);var o=n(19),i=n(6);for(var r in i)"default"!==r&&function(t){n.d(e,t,function(){return i[t]})}(r);var s=n(0),c=Object(s.a)(i.default,o.a,o.b,!1,null,null,null);e.default=c.exports},function(t,e,n){"use strict";n.r(e);var o=n(20),i=n(8);for(var r in i)"default"!==r&&function(t){n.d(e,t,function(){return i[t]})}(r);var s=n(0),c=Object(s.a)(i.default,o.a,o.b,!1,null,null,null);e.default=c.exports},function(t,e,n){"use strict";n.r(e);var o=n(21),i=n(10);for(var r in i)"default"!==r&&function(t){n.d(e,t,function(){return i[t]})}(r);var s=n(0),c=Object(s.a)(i.default,o.a,o.b,!1,null,null,null);e.default=c.exports},function(t,e,n){"use strict";var o=n(12);n.n(o).a},,function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var o=Object.assign||function(t){for(var e=1;e<arguments.length;e++){var n=arguments[e];for(var o in n)Object.prototype.hasOwnProperty.call(n,o)&&(t[o]=n[o])}return t},i="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},r=n(16),s=n(1),c=function(t){Object.defineProperties(this,{Vue:{get:function(){return t}},confirmDefinition:{get:this.defineConfirm}})};c.prototype.getConfirmMessage=function(t){return t.value&&t.value.message?t.value.message:"string"==typeof t.value?t.value:null},c.prototype.getOptions=function(t){var e="object"===i(t.value)?(0,r.cloneObj)(t.value):{};return delete e.ok,delete e.cancel,t.arg&&s.CONFIRM_TYPES.hasOwnProperty(t.arg.toUpperCase())&&(e.type=s.CONFIRM_TYPES[t.arg.toUpperCase()]),e},c.prototype.getThenCallback=function(t,e){return t.value&&t.value.ok?function(n){return t.value.ok(o({},n,{node:e}))}:function(t){t.loading&&t.close(),e.removeEventListener("click",e.VuejsDialog.clickHandler,!0),(0,r.clickNode)(e),e.addEventListener("click",e.VuejsDialog.clickHandler,!0)}},c.prototype.getCatchCallback=function(t){return t.value&&t.value.cancel?t.value.cancel:r.noop},c.prototype.clickHandler=function(t,e,n){t.preventDefault(),t.stopImmediatePropagation();var o=this.getOptions(n),i=this.getConfirmMessage(n),r=this.getThenCallback(n,e),s=this.getCatchCallback(n);this.Vue.dialog.confirm(i,o).then(r).catch(s)},c.prototype.defineConfirm=function(){var t=this,e={bind:function(e,n){e.VuejsDialog=e.VuejsDialog||{},e.VuejsDialog.clickHandler=function(o){return t.clickHandler(o,e,n)},e.addEventListener("click",e.VuejsDialog.clickHandler,!0)},unbind:function(t){t.removeEventListener("click",t.VuejsDialog.clickHandler,!0)}};return e},e.default=c},function(t,e,n){"use strict";n.r(e);var o=n(0),i=Object(o.a)({},function(){this.$createElement;this._self._c;return this._m(0)},[function(){var t=this.$createElement,e=this._self._c||t;return e("span",{staticClass:"dg-btn-loader"},[e("span",{staticClass:"dg-circles"},[e("span",{staticClass:"dg-circle"}),this._v(" "),e("span",{staticClass:"dg-circle"}),this._v(" "),e("span",{staticClass:"dg-circle"})])])}],!1,null,null,null);e.default=i.exports}])});
+
+/***/ }),
+
 /***/ "./node_modules/webpack/buildin/global.js":
 /*!***********************************!*\
   !*** (webpack)/buildin/global.js ***!
@@ -54928,6 +55094,12 @@ module.exports = function(module) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_line_clamp__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-line-clamp */ "./node_modules/vue-line-clamp/dist/vue-line-clamp.js");
 /* harmony import */ var vue_line_clamp__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_line_clamp__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuejs_dialog__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuejs-dialog */ "./node_modules/vuejs-dialog/dist/vuejs-dialog.min.js");
+/* harmony import */ var vuejs_dialog__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuejs_dialog__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vuejs_dialog_dist_vuejs_dialog_mixin_min_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuejs-dialog/dist/vuejs-dialog-mixin.min.js */ "./node_modules/vuejs-dialog/dist/vuejs-dialog-mixin.min.js");
+/* harmony import */ var vuejs_dialog_dist_vuejs_dialog_mixin_min_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vuejs_dialog_dist_vuejs_dialog_mixin_min_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vuejs_dialog_dist_vuejs_dialog_min_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuejs-dialog/dist/vuejs-dialog.min.css */ "./node_modules/vuejs-dialog/dist/vuejs-dialog.min.css");
+/* harmony import */ var vuejs_dialog_dist_vuejs_dialog_min_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vuejs_dialog_dist_vuejs_dialog_min_css__WEBPACK_IMPORTED_MODULE_3__);
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -54936,6 +55108,11 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+
+
+ // only needed in custom components
+// include the default style
+
 
 /**
  * The following block of code may be used to automatically register your
@@ -54957,6 +55134,17 @@ Vue.component('repos-component', __webpack_require__(/*! ./components/ReposCompo
 
 Vue.use(vue_line_clamp__WEBPACK_IMPORTED_MODULE_0___default.a, {});
 Vue.use(__webpack_require__(/*! vue-moment */ "./node_modules/vue-moment/dist/vue-moment.js"));
+Vue.use(vuejs_dialog__WEBPACK_IMPORTED_MODULE_1___default.a, {
+  html: true,
+  loader: true,
+  okText: 'Yes, delete repositories',
+  cancelText: 'No, keep repositories',
+  animation: 'bounce',
+  type: 'soft',
+  clicksCount: 3,
+  // for soft confirm, user will be asked to click on "proceed" btn 3 times before actually proceeding
+  customClass: 'deleteConfirm'
+});
 var app = new Vue({
   el: '#app'
 });

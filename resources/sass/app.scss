@@ -144,3 +144,11 @@ header .title {
 .deleteRepos:disabled {
     background-color: #ccc;
 }
+
+.dg-btn--ok {
+  border-color: green;
+}
+
+.dg-btn-loader .dg-circle {
+  background-color: green;
+}
