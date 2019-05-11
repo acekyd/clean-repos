@@ -12,6 +12,9 @@
 */
 
 Route::get('/', function () {
+    if (session()->get('user')) {
+        return redirect('/app');
+    }
     return view('welcome');
 });
 
