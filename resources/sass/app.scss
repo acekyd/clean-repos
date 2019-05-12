@@ -145,9 +145,6 @@ header .title {
     background-color: #ccc;
 }
 
-.dg-btn--ok {
-  border-color: green;
-}
 
 .dg-btn-loader .dg-circle {
   background-color: green;
@@ -155,4 +152,40 @@ header .title {
 
 .margined {
     margin-top: 25%;
+}
+
+.deleteConfirm {
+    .dg-main-content {
+        max-width: 500px;
+        background-color: #12143c;
+    }
+
+    .dg-title {
+        font-size: 25px;
+    }
+
+    .dg-content-body--has-title .dg-content {
+        font-size: 16px;
+    }
+
+    .dg-content-body {
+        padding-bottom: 2em;
+        color: #fefefe;
+    }
+    .dg-btn--ok {
+        color: #fefefe;
+        background-color: #b04040;
+        border-color: transparent;
+    }
+    .dg-btn--cancel {
+        color: #09be67;
+        background-color: transparent;
+        border-color: #09be67;
+    }
+
+    .dg-btn-loader .dg-circle {
+        background-color: #09be67;
+    }
+
+
 }
