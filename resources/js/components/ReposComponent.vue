@@ -9,6 +9,8 @@
 
                 <div class="repos">
                     <vue-custom-scrollbar class="scroll-area" :settings="settings">
+                        <beat-loader :loading="loading" :color="color" :size="size" class="text-center"></beat-loader>
+                        <p class="text-center" v-show="loadError">An error occurred. Repositories not loaded!</p>
                         <label v-for="repo in repos" :key="repo.full_name" class="repo-item row">
                             <div class="col-md-1">
                                 <input type="checkbox" v-model="selectedRepos" :id="repo.id" :value="repo.full_name">
@@ -44,11 +46,15 @@
                     </button> <br />
                     <label for="starCleanRepo">
                         <input type="checkbox" v-model="starCleanRepo" />
-                        Star the CleanRepo repository on GitHub
+                        <small>Star the CleanRepo repository on GitHub</small>
                     </label>
                 </div>
             </div>
             <div class="col-md-8" v-else>
+                <div class="col-md text-center">
+                    <h2>Cleaning complete!</h2>
+                    <p v-if="deleteError"><small> An error may have occurred while deleting one or more repos.</small></p>
+                </div>
                 Operation completed.
             </div>
 
@@ -59,6 +65,7 @@
 <script>
     // import installed component for scrollbar
     import vueCustomScrollbar from 'vue-custom-scrollbar'
+    import BeatLoader from 'vue-spinner/src/BeatLoader.vue'
 
     export default {
         props: {
@@ -68,7 +75,8 @@
             }
         },
         components: {
-            vueCustomScrollbar
+            vueCustomScrollbar,
+            BeatLoader
         },
         data() {
             return {
@@ -78,6 +86,8 @@
                 },
                 repos: {},
                 loading: true,
+                color: "#3AB982",
+                size: "1em",
                 loadError: false,
                 starCleanRepo: true,
                 selectedRepos: [],
@@ -85,8 +95,8 @@
                     title: 'Delete repositories?',
                     body: 'Deleting a repository will permanently remove it from your profile.'
                 },
-                completed: false,
-                deleteError: false
+                completed: true,
+                deleteError: true
 
             }
         },
@@ -102,17 +112,14 @@
                     }
                 }).then(function (response) {
                         // handle success
-                        console.log(response.data);
                         self.repos = response.data;
                     })
                     .catch(function (error) {
                         // handle error
-                        console.log(error)
                         self.loadError = true
                     })
                     .finally(function () {
                         // always executed
-                        //turn off loader here and display error or repos.
                         self.loading = false
                     });
             },
@@ -131,30 +138,27 @@
             deleteRepos(){
                 var promises = [];
                 var self = this;
-                var test = ['acekyd/test-nope', 'acekyd/test-mad', 'acekyd/tested-error'];
                 const axiosInstance = axios.create({
                     baseURL: 'https://api.github.com/',
                     headers: { 'Authorization': 'token ' + this.user.token}
                 });
-                for(let i=0; i < test.length; i++)
+                for(let i=0; i < selectedRepos.length; i++)
                 {
-                    promises.push(axiosInstance.delete('/repos/'+test[i]));
+                    promises.push(axiosInstance.delete('/repos/'+selectedRepos[i]));
                 }
                 Promise.all(promises).then(function(results) {
                     console.log("Results", results);
                 })
                 .catch(function (error){
                     self.deleteError = true;
-                    console.log(error.message)
                 })
 
-                this.completed = true;
                 this.starRepo();
+
                 //enable flag to show success page
-                console.log('Delete action completed ');
+                this.completed = true;
             },
             okCallback(dialog) {
-
                 setTimeout(() => {
                 //send delete api requests
                 this.deleteRepos();
