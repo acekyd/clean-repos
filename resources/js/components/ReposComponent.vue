@@ -99,6 +99,8 @@
             }
         },
         components: {
+            vueCustomScrollbar,
+            BeatLoader,
             VueGoodshareFacebook,
             VueGoodshareTwitter,
             VueGoodshareEmail
@@ -120,8 +122,8 @@
                     title: 'Delete repositories?',
                     body: 'Deleting a repository will permanently remove it from your profile.'
                 },
-                completed: true,
-                deleteError: true
+                completed: false,
+                deleteError: false
 
             }
         },

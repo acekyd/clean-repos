@@ -1899,6 +1899,8 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   components: {
+    vueCustomScrollbar: vue_custom_scrollbar__WEBPACK_IMPORTED_MODULE_0___default.a,
+    BeatLoader: vue_spinner_src_BeatLoader_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     VueGoodshareFacebook: vue_goodshare_src_providers_Facebook_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
     VueGoodshareTwitter: vue_goodshare_src_providers_Twitter_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
     VueGoodshareEmail: vue_goodshare_src_providers_Email_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
@@ -1920,8 +1922,8 @@ __webpack_require__.r(__webpack_exports__);
         title: 'Delete repositories?',
         body: 'Deleting a repository will permanently remove it from your profile.'
       },
-      completed: true,
-      deleteError: true
+      completed: false,
+      deleteError: false
     };
   },
   methods: {
