@@ -41,28 +41,24 @@ header .title {
     padding: 1em;
     background-color: rgba(255,255,255, 0.05);
     font-size: 1rem;
-}
 
-.repo-item h4 {
-    font-weight: bold;
-}
-
-.repo-item p {
-    margin-bottom: 0;
-    word-break: break-word !important; //added !important to override line clamp
-}
-
-.repo-item a {
-    color: #09be67;
-}
-
-.repo-item:hover {
-    background-color: rgba(9,190,103, 0.2);
-}
-
-.repo-item .additional-details {
-    text-align: right;
-    color: #a5a4a4;
+    h4 {
+        font-weight: bold;
+    }
+    p {
+        margin-bottom: 0;
+        word-break: break-word !important; //added !important to override line clamp
+    }
+    a {
+        color: #09be67;
+    }
+    &:hover {
+        background-color: rgba(9,190,103, 0.2);
+    }
+    .additional-details {
+        text-align: right;
+        color: #a5a4a4;
+    }
 }
 
 /* Hide the browser's default checkbox */
@@ -148,7 +144,6 @@ header .title {
 .deleteRepos:disabled {
     background-color: #ccc;
 }
-
 
 .dg-btn-loader .dg-circle {
   background-color: green;
