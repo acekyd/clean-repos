@@ -51,11 +51,30 @@
                 </div>
             </div>
             <div class="col-md-8" v-else>
-                <div class="col-md text-center">
+                <div class="col-md text-center margined">
                     <h2>Cleaning complete!</h2>
                     <p v-if="deleteError"><small> An error may have occurred while deleting one or more repos.</small></p>
+                    <div class="col-md text-center">
+                        <p>You can go back to delete more repositories or share on social media :) </p>
+                        <vue-goodshare-facebook
+                            page_url="https://github.com"
+                            title_social="Facebook"
+                            has_counter
+                            has_icon
+                        ></vue-goodshare-facebook>
+                        <vue-goodshare-twitter
+                            page_url="https://github.com"
+                            page_title="Check out CleanRepos - a simple tool to help clear out multiple old, broken, uncompleted or abandoned repositories from your GitHub account."
+                            title_social="Send a tweet"
+                            has_icon
+                        ></vue-goodshare-twitter>
+                        <vue-goodshare-email
+                            page_url="https://github.com"
+                            title_social="Share via e-mail"
+                            has_icon
+                        ></vue-goodshare-email>
+                    </div>
                 </div>
-                Operation completed.
             </div>
 
         </div>
@@ -66,6 +85,11 @@
     // import installed component for scrollbar
     import vueCustomScrollbar from 'vue-custom-scrollbar'
     import BeatLoader from 'vue-spinner/src/BeatLoader.vue'
+    import VueGoodshareFacebook from "vue-goodshare/src/providers/Facebook.vue";
+    import VueGoodshareTwitter from "vue-goodshare/src/providers/Twitter.vue";
+    import VueGoodshareEmail from "vue-goodshare/src/providers/Email.vue";
+
+
 
     export default {
         props: {
@@ -75,8 +99,9 @@
             }
         },
         components: {
-            vueCustomScrollbar,
-            BeatLoader
+            VueGoodshareFacebook,
+            VueGoodshareTwitter,
+            VueGoodshareEmail
         },
         data() {
             return {
