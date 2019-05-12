@@ -120,7 +120,7 @@
                 selectedRepos: [],
                 message: {
                     title: 'Delete repositories?',
-                    body: 'Deleting a repository will permanently remove it from your profile.'
+                    body: "Deleting a repository will permanently remove it from your profile. \n Click delete 3 times to confirm."
                 },
                 completed: false,
                 deleteError: false
@@ -179,18 +179,15 @@
                 .catch(function (error){
                     self.deleteError = true;
                 })
-
-                this.starRepo();
-
-                //enable flag to show success page
-                this.completed = true;
+                .finally(function () {
+                    dialog.close();
+                    this.starRepo();
+                    //enable flag to show success page
+                    this.completed = true;
+                })
             },
             okCallback(dialog) {
-                setTimeout(() => {
-                //send delete api requests
-                this.deleteRepos();
-                dialog.close();
-                }, 2500);
+                this.deleteRepos(dialog);
             },
             cancelCallback() {
                 console.log("cancel clicked");
