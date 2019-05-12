@@ -120,7 +120,7 @@
                 selectedRepos: [],
                 message: {
                     title: 'Delete repositories?',
-                    body: "Deleting a repository will permanently remove it from your profile. \n Click delete 3 times to confirm."
+                    body: "Deleting a repository will permanently remove it from your profile. Click delete 3 times to confirm."
                 },
                 completed: false,
                 deleteError: false
@@ -169,25 +169,27 @@
                     baseURL: 'https://api.github.com/',
                     headers: { 'Authorization': 'token ' + this.user.token}
                 });
-                for(let i=0; i < selectedRepos.length; i++)
+                for(let i=0; i < this.selectedRepos.length; i++)
                 {
-                    promises.push(axiosInstance.delete('/repos/'+selectedRepos[i]));
+                    promises.push(axiosInstance.delete('/repos/'+ this.selectedRepos[i]));
                 }
                 Promise.all(promises).then(function(results) {
-                    console.log("Results", results);
+                    return results;
                 })
                 .catch(function (error){
                     self.deleteError = true;
                 })
                 .finally(function () {
-                    dialog.close();
-                    this.starRepo();
+                     self.starRepo();
                     //enable flag to show success page
-                    this.completed = true;
+                    self.completed = true;
                 })
+
+
             },
-            okCallback(dialog) {
-                this.deleteRepos(dialog);
+            async okCallback(dialog) {
+                await this.deleteRepos();
+                dialog.close();
             },
             cancelCallback() {
                 console.log("cancel clicked");

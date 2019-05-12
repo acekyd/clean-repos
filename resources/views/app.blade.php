@@ -24,6 +24,10 @@
         <repos-component :user="{{ collect(session()->get('user')) }}"></repos-component>
     </div>
 
+    <footer class="col-md fixed text-center">
+        <small>♠🖤 - Check out the repo on <a href="https://www.github.com/acekyd/clean-repos">GitHub</a>.</small>
+    </footer>
+
     <!-- Include vuejs output script. -->
     <script type="text/javascript" src="js/app.js"></script>
 </body>
