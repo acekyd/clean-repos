@@ -25,7 +25,7 @@
     <!-- Styles -->
     <style>
         body {
-            background-color: #12143c;
+            background: #12143c;
             color: #dddddd;
             font-family: 'Nunito', sans-serif;
             font-weight: 200;
@@ -57,6 +57,7 @@
 
             body {
                 padding: 5em;
+                background: url('/oval.svg') #12143c no-repeat right bottom;
             }
 
             #content {

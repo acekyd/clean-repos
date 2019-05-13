@@ -8,7 +8,7 @@
 @import '~bootstrap/scss/bootstrap';
 
 body {
-    background-color: #12143c;
+    background: url('/oval.svg') #12143c no-repeat right bottom;
     color: #dddddd;
     font-family: 'Nunito', sans-serif;
     font-weight: 200;
@@ -194,6 +194,9 @@ header .title {
 
 
 @media (max-width: 767.98px) {
+    body {
+        background: #12143c;
+    }
     #app {
         .content {
             margin: 1em auto;
