@@ -5,10 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>CleanRepos</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+    <!-- Styles -->
+    <link href="css/app.css" rel="stylesheet">
 
     <!-- Styles -->
     <style>
@@ -19,8 +21,8 @@
             font-weight: 200;
             height: 100vh;
             margin: 0;
-            padding: 5em;
-            font-size: 22px;
+            padding: 1em;
+            font-size: 1.1rem;
 
         }
 
@@ -34,11 +36,26 @@
 
         #content {
             margin: 0;
-            position: absolute;
-            top: 50%;
-            -ms-transform: translateY(-50%);
-            transform: translateY(-50%);
-            width: 55%;
+        }
+
+        #content h2 {
+            font-size: 1.5em;
+            margin: 1.5rem auto;
+        }
+
+        @media (min-width: 767.98px) {
+
+            body {
+                padding: 5em;
+            }
+
+            #content {
+                position: absolute;
+                top: 50%;
+                -ms-transform: translateY(-50%);
+                transform: translateY(-50%);
+                width: 55%;
+            }
         }
 
         #content h2 .lighter {
@@ -46,7 +63,8 @@
         }
 
         .authenticate {
-            width: 335px;
+            width: 90%;
+            max-width: 335px;
             height: 73px;
             border-radius: 10px;
             box-shadow: 0 0 37px 5px rgba(9, 190, 103, 0.64);
@@ -78,6 +96,13 @@
             </a>
         </div>
     </section>
+
+    <footer class="col-md fixed-bottom text-center">
+        <small>♠🖤 - Check out the repo on <a href="https://www.github.com/acekyd/clean-repos">GitHub</a>.</small>
+    </footer>
+
+    <!-- Include vuejs output script. -->
+    <script type="text/javascript" src="js/app.js"></script>
 </body>
 
 </html>

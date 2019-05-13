@@ -187,12 +187,12 @@ header .title {
     }
 }
 
-.fixed {
-    position: fixed;
-    height: auto;
+.fixed-bottom {
     padding: 0.5em;
-    bottom: 0;
-    left: 0;
     background: #12143c;
+}
+
+
+@media (min-width: 767.98px) {
 
 }

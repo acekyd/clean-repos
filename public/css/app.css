@@ -10852,12 +10852,8 @@ header .title {
   background-color: #09be67;
 }
 
-.fixed {
-  position: fixed;
-  height: auto;
+.fixed-bottom {
   padding: 0.5em;
-  bottom: 0;
-  left: 0;
   background: #12143c;
 }
 

@@ -24,7 +24,7 @@
         <repos-component :user="{{ collect(session()->get('user')) }}"></repos-component>
     </div>
 
-    <footer class="col-md fixed text-center">
+    <footer class="col-md fixed-bottom text-center">
         <small>♠🖤 - Check out the repo on <a href="https://www.github.com/acekyd/clean-repos">GitHub</a>.</small>
     </footer>
 
