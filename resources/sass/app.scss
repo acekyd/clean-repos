@@ -193,6 +193,20 @@ header .title {
 }
 
 
-@media (min-width: 767.98px) {
-
+@media (max-width: 767.98px) {
+    #app {
+        .content {
+            margin: 1em auto;
+        }
+        h2 {
+            font-size: 1.4rem;
+        }
+        .repo-item div:nth-child(1) {
+            margin: 1em auto;
+        }
+        .repo-item div:nth-child(2)
+        {
+            text-align: right;
+        }
+    }
 }

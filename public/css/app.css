@@ -10857,3 +10857,21 @@ header .title {
   background: #12143c;
 }
 
+@media (max-width: 767.98px) {
+  #app .content {
+    margin: 1em auto;
+  }
+
+  #app h2 {
+    font-size: 1.4rem;
+  }
+
+  #app .repo-item div:nth-child(1) {
+    margin: 1em auto;
+  }
+
+  #app .repo-item div:nth-child(2) {
+    text-align: right;
+  }
+}
+
