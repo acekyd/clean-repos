@@ -40288,7 +40288,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("vue-goodshare-facebook", {
                     attrs: {
-                      page_url: "https://github.com",
+                      page_url: "https://clean-repos.herokuapp.com",
                       title_social: "Facebook",
                       has_counter: "",
                       has_icon: ""
@@ -40297,7 +40297,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("vue-goodshare-twitter", {
                     attrs: {
-                      page_url: "https://github.com",
+                      page_url: "https://clean-repos.herokuapp.com",
                       page_title:
                         "Check out CleanRepos - a simple tool to help clear out multiple old, broken, uncompleted or abandoned repositories from your GitHub account.",
                       title_social: "Send a tweet",
@@ -40307,7 +40307,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("vue-goodshare-email", {
                     attrs: {
-                      page_url: "https://github.com",
+                      page_url: "https://clean-repos.herokuapp.com",
                       title_social: "Share via e-mail",
                       has_icon: ""
                     }

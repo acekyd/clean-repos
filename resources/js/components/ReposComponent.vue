@@ -57,19 +57,19 @@
                     <div class="col-md text-center">
                         <p>You can go back to delete more repositories or share on social media :) </p>
                         <vue-goodshare-facebook
-                            page_url="https://github.com"
+                            page_url="https://clean-repos.herokuapp.com"
                             title_social="Facebook"
                             has_counter
                             has_icon
                         ></vue-goodshare-facebook>
                         <vue-goodshare-twitter
-                            page_url="https://github.com"
+                            page_url="https://clean-repos.herokuapp.com"
                             page_title="Check out CleanRepos - a simple tool to help clear out multiple old, broken, uncompleted or abandoned repositories from your GitHub account."
                             title_social="Send a tweet"
                             has_icon
                         ></vue-goodshare-twitter>
                         <vue-goodshare-email
-                            page_url="https://github.com"
+                            page_url="https://clean-repos.herokuapp.com"
                             title_social="Share via e-mail"
                             has_icon
                         ></vue-goodshare-email>

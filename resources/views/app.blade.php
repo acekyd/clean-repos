@@ -12,6 +12,16 @@
 
     <!-- Styles -->
     <link href="css/app.css" rel="stylesheet">
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@ace_kyd" />
+    <meta name="twitter:title" content="CleanRepos for GitHub Repositories" />
+    <meta name="twitter:description" content="An utility tool to help clear out multiple old, broken, uncompleted or abandoned repositories from your GitHub account." />
+
+    <meta property="og:url" content="https://clean-repos.herokuapp.com" />
+    <meta property="og:title" content="CleanRepos for GitHub Repositories" />
+    <meta property="og:description" content="An utility tool to help clear out multiple old, broken, uncompleted or abandoned repositories from your GitHub account." />
+
 </head>
 
 <body>
