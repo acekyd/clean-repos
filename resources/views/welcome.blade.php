@@ -114,6 +114,8 @@
             CleanRepos is a simple web application that helps you clean up your GitHub repos. You have unused forks, abandoned and empty projects etc that may serve as a distraction if someone is trying to view your profile or see projects you work on.
         </p>
 
+        <p><small>NOTE: No data or token is stored. Not on the browser or in the server.</small></p>
+
         <div>
             <a href="/login">
                 <button class="authenticate">Get Started</button>
