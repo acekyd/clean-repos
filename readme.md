@@ -14,5 +14,5 @@ CleanRepos is an utility tool to help clear out multiple old, broken, uncomplete
 
 
 ## Contributors
-* Dev - @acekyd
-* Design - @nottherealillest
+* Dev - [@ace_kyd](https://twitter.com/ace_kyd)
+* Design - [@nottherealillest](https://twitter.com/nottherealilest)
