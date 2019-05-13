@@ -13,6 +13,8 @@
     <!-- Styles -->
     <link href="css/app.css" rel="stylesheet">
 
+    <meta name="description" content="CleanRepos is an utility tool to help clear out multiple old, broken, uncompleted or abandoned repositories from your GitHub account."/>
+
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="@ace_kyd" />
     <meta name="twitter:title" content="CleanRepos for GitHub Repositories" />
@@ -21,6 +23,20 @@
     <meta property="og:url" content="https://clean-repos.herokuapp.com" />
     <meta property="og:title" content="CleanRepos for GitHub Repositories" />
     <meta property="og:description" content="An utility tool to help clear out multiple old, broken, uncompleted or abandoned repositories from your GitHub account." />
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-140077923-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-140077923-1');
+    </script>
+
 
 </head>
 
